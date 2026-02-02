@@ -21,7 +21,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(50);
 
         builder.Property(u => u.PasswordHash)
-            .IsRequired()
             .HasMaxLength(256);
 
         builder.Property(u => u.Role)
@@ -29,8 +28,20 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion<string>()
             .HasMaxLength(20);
 
-        // Unique indexes
+        builder.Property(u => u.IsEmailVerified)
+            .HasDefaultValue(false);
+
         builder.HasIndex(u => u.Email).IsUnique();
         builder.HasIndex(u => u.Username).IsUnique();
+
+        builder.HasMany(u => u.ExternalLogins)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(u => u.VerificationTokens)
+            .WithOne(v => v.User)
+            .HasForeignKey(v => v.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

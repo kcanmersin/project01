@@ -11,18 +11,31 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DotNetEnv;
 
-// Load .env file from project root
+// Load .env file from project root or infrastructure folder
 var projectRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".."));
-var envPath = System.IO.Path.Combine(projectRoot, ".env");
-Console.WriteLine($"Looking for .env at: {envPath}");
-if (File.Exists(envPath))
+var possibleEnvPaths = new[]
 {
-    Console.WriteLine(".env file found, loading...");
-    Env.Load(envPath);
+    System.IO.Path.Combine(projectRoot, "infrastructure", ".env"),
+    System.IO.Path.Combine(projectRoot, ".env"),
+    System.IO.Path.Combine(projectRoot, "backend", ".env")
+};
+
+string? envPath = null;
+foreach (var path in possibleEnvPaths)
+{
+    Console.WriteLine($"Looking for .env at: {path}");
+    if (File.Exists(path))
+    {
+        envPath = path;
+        Console.WriteLine($".env file found at: {path}");
+        Env.Load(envPath);
+        break;
+    }
 }
-else
+
+if (envPath == null)
 {
-    Console.WriteLine(".env file NOT found!");
+    Console.WriteLine(".env file NOT found in any expected location!");
 }
 
 var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
@@ -49,6 +62,21 @@ builder.Configuration["JWT_SECRET"] = jwtSecret;
 builder.Configuration["JWT_ISSUER"] = jwtIssuer;
 builder.Configuration["JWT_AUDIENCE"] = jwtAudience;
 builder.Configuration["JWT_EXPIRES_HOURS"] = Environment.GetEnvironmentVariable("JWT_EXPIRES_HOURS") ?? "24";
+
+// Add Google OAuth config
+builder.Configuration["GOOGLE_CLIENT_ID"] = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID");
+
+// Add SMTP config
+builder.Configuration["SMTP_HOST"] = Environment.GetEnvironmentVariable("SMTP_HOST");
+builder.Configuration["SMTP_PORT"] = Environment.GetEnvironmentVariable("SMTP_PORT") ?? "587";
+builder.Configuration["SMTP_USERNAME"] = Environment.GetEnvironmentVariable("SMTP_USERNAME");
+builder.Configuration["SMTP_PASSWORD"] = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
+builder.Configuration["SMTP_FROM_EMAIL"] = Environment.GetEnvironmentVariable("SMTP_FROM_EMAIL") ?? "noreply@cinefeel.com";
+builder.Configuration["SMTP_FROM_NAME"] = Environment.GetEnvironmentVariable("SMTP_FROM_NAME") ?? "CineFeel";
+
+// Add Email Verification config
+builder.Configuration["EMAIL_VERIFICATION_EXPIRY_HOURS"] = Environment.GetEnvironmentVariable("EMAIL_VERIFICATION_EXPIRY_HOURS") ?? "24";
+builder.Configuration["FRONTEND_URL"] = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "http://localhost:3000";
 
 // Add services to the container.
 builder.Services.AddControllers()

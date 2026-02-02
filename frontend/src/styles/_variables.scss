@@ -1,0 +1,132 @@
+// CineFeel - Cinematic Dark Theme
+// Inspired by classic cinema, film noir, and art deco elegance
+
+// Core Palette
+$color-bg-dark: #0a0a0f; // Deep cinema black
+$color-bg-darker: #050507; // Pure black
+$color-bg-card: #12121a; // Card surfaces
+$color-bg-elevated: #1a1a24; // Elevated surfaces
+
+// Accent Colors - Golden Cinema & Electric Violet
+$color-primary: #c9a227; // Cinema gold
+$color-primary-dim: rgba(201, 162, 39, 0.15);
+$color-accent: #8b5cf6; // Electric violet
+$color-accent-dim: rgba(139, 92, 246, 0.15);
+$color-highlight: #e4d5a7; // Warm highlight
+
+// Semantic Colors
+$color-success: #22c55e;
+$color-warning: #f59e0b;
+$color-error: #ef4444;
+$color-info: #3b82f6;
+
+// Text Colors
+$color-text-main: #fafaf9;
+$color-text-secondary: #d4d4d4;
+$color-text-muted: #737373;
+$color-text-disabled: #525252;
+
+// Glassmorphism
+$glass-bg: rgba(18, 18, 26, 0.8);
+$glass-bg-light: rgba(255, 255, 255, 0.03);
+$glass-border: rgba(201, 162, 39, 0.1);
+$glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+// Typography - Cinematic Fonts
+$font-display: 'Playfair Display', 'Georgia', serif; // Headlines
+$font-body: 'DM Sans', 'Segoe UI', sans-serif; // Body text
+$font-mono: 'JetBrains Mono', 'Fira Code', monospace; // Code/numbers
+
+// Font Sizes
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.25rem;
+$text-5xl: 3rem;
+$text-6xl: 3.75rem;
+$text-7xl: 4.5rem;
+
+// Font Weights
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-semibold: 600;
+$font-bold: 700;
+
+// Spacing Scale
+$spacing-0: 0;
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-5: 1.25rem;
+$spacing-6: 1.5rem;
+$spacing-8: 2rem;
+$spacing-10: 2.5rem;
+$spacing-12: 3rem;
+$spacing-16: 4rem;
+$spacing-20: 5rem;
+$spacing-24: 6rem;
+
+// Legacy spacing (for compatibility)
+$spacing-xs: $spacing-2;
+$spacing-sm: $spacing-4;
+$spacing-md: $spacing-6;
+$spacing-lg: $spacing-8;
+$spacing-xl: $spacing-12;
+
+// Border Radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-2xl: 24px;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+$shadow-glow-gold: 0 0 30px rgba(201, 162, 39, 0.3);
+$shadow-glow-violet: 0 0 30px rgba(139, 92, 246, 0.3);
+
+// Transitions
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// Z-Index Scale
+$z-base: 0;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-fixed: 300;
+$z-modal-backdrop: 400;
+$z-modal: 500;
+$z-popover: 600;
+$z-tooltip: 700;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// Container
+$container-padding: $spacing-6;
+$container-max-width: 1400px;
+
+// Movie Card Dimensions
+$card-width-sm: 140px;
+$card-width-md: 180px;
+$card-width-lg: 220px;
+$card-aspect-ratio: 3 / 4.5;
+
+// Header Height
+$header-height: 72px;

@@ -1,0 +1,283 @@
+@use 'sass:color';
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: $spacing-16;
+  margin-bottom: $spacing-8;
+  overflow: hidden;
+
+  @include md {
+    min-height: 90vh;
+  }
+}
+
+// Backdrop
+.backdrop {
+  @include absolute-fill;
+  z-index: 0;
+  transition: opacity 0.5s ease;
+
+  &.fadeOut {
+    opacity: 0;
+  }
+}
+
+.backdropImage {
+  @include absolute-fill;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.backdropOverlay {
+  @include absolute-fill;
+  background:
+    // Top gradient for header
+    linear-gradient(180deg, rgba($color-bg-dark, 0.7) 0%, transparent 15%),
+    // Left content area
+    linear-gradient(90deg, rgba($color-bg-dark, 0.95) 0%, rgba($color-bg-dark, 0.6) 40%, transparent 70%),
+    // Bottom gradient
+    linear-gradient(0deg, $color-bg-dark 0%, rgba($color-bg-dark, 0.8) 20%, transparent 50%),
+    // Overall darkening
+    rgba($color-bg-dark, 0.3);
+}
+
+// Container
+.container {
+  @include container;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-8;
+}
+
+// Content
+.content {
+  max-width: 650px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.fadeOut {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+// Badge
+.badge {
+  @include flex-center;
+  gap: $spacing-2;
+  width: fit-content;
+  padding: $spacing-2 $spacing-4;
+  background: rgba($color-primary, 0.15);
+  border: 1px solid rgba($color-primary, 0.3);
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  color: $color-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: $spacing-4;
+  animation: fadeInUp 0.6s ease;
+}
+
+.badgeIcon {
+  font-size: $text-sm;
+}
+
+// Title
+.title {
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: $font-bold;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: $color-text-main;
+  margin-bottom: $spacing-4;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 0.6s ease 0.1s backwards;
+}
+
+// Meta
+.meta {
+  @include flex-start;
+  gap: $spacing-3;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-5;
+  animation: fadeInUp 0.6s ease 0.2s backwards;
+}
+
+.rating {
+  @include flex-center;
+  gap: $spacing-1;
+  font-weight: $font-semibold;
+  color: $color-text-main;
+}
+
+.star {
+  color: $color-primary;
+}
+
+.separator {
+  color: $color-text-muted;
+}
+
+.year, .votes {
+  color: $color-text-muted;
+}
+
+// Overview
+.overview {
+  font-size: $text-base;
+  line-height: 1.7;
+  color: $color-text-secondary;
+  @include line-clamp(3);
+  margin-bottom: $spacing-6;
+  animation: fadeInUp 0.6s ease 0.3s backwards;
+
+  @include md {
+    font-size: $text-lg;
+    @include line-clamp(4);
+  }
+}
+
+// Actions
+.actions {
+  @include flex-start;
+  gap: $spacing-3;
+  animation: fadeInUp 0.6s ease 0.4s backwards;
+}
+
+.primaryButton {
+  @include button-primary;
+  padding: $spacing-3 $spacing-6;
+  font-size: $text-base;
+  gap: $spacing-2;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.secondaryButton {
+  @include button-ghost;
+  padding: $spacing-3 $spacing-5;
+  font-size: $text-sm;
+  color: $color-text-main;
+  gap: $spacing-2;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.iconButton {
+  @include flex-center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: $radius-full;
+  color: $color-text-main;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba($color-primary, 0.5);
+  }
+}
+
+// Indicators
+.indicators {
+  @include flex-start;
+  gap: $spacing-2;
+  align-self: flex-start;
+}
+
+.indicator {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: $radius-full;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all $transition-fast;
+  position: relative;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  &.active {
+    width: 60px;
+    background: rgba(255, 255, 255, 0.2);
+
+    .indicatorProgress {
+      animation: progress 8s linear;
+    }
+  }
+}
+
+.indicatorProgress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: $color-primary;
+  border-radius: $radius-full;
+}
+
+@keyframes progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+// Bottom Gradient
+.bottomGradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 200px;
+  background: linear-gradient(180deg, transparent, $color-bg-dark);
+  pointer-events: none;
+  z-index: 0;
+}
+
+// Skeleton Loading
+.skeleton {
+  @include absolute-fill;
+  @include skeleton;
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,151 @@
+@use 'sass:color';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding-top: $header-height;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  margin-top: -$spacing-16;
+}
+
+// Genres Section
+.genresSection {
+  @include container;
+  padding-top: $spacing-12;
+  padding-bottom: $spacing-16;
+}
+
+.genresTitle {
+  @include flex-start;
+  gap: $spacing-3;
+  font-family: $font-display;
+  font-size: $text-2xl;
+  font-weight: $font-bold;
+  color: $color-text-main;
+  margin-bottom: $spacing-6;
+
+  @include md {
+    font-size: $text-3xl;
+  }
+}
+
+.titleAccent {
+  display: block;
+  width: 4px;
+  height: 28px;
+  background: linear-gradient(180deg, $color-primary, $color-accent);
+  border-radius: $radius-full;
+
+  @include md {
+    height: 32px;
+  }
+}
+
+.genresGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-3;
+}
+
+.genreChip {
+  padding: $spacing-3 $spacing-5;
+  background: $glass-bg;
+  backdrop-filter: blur(8px);
+  border: 1px solid $glass-border;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $color-text-secondary;
+  cursor: pointer;
+  transition: all $transition-fast;
+  animation: fadeInUp 0.5s ease backwards;
+
+  &:hover {
+    background: rgba($color-primary, 0.1);
+    border-color: rgba($color-primary, 0.4);
+    color: $color-primary;
+    transform: translateY(-2px);
+  }
+}
+
+// Footer
+.footer {
+  background: $color-bg-darker;
+  border-top: 1px solid $glass-border;
+  padding: $spacing-12 0;
+}
+
+.footerContent {
+  @include container;
+  @include flex-column;
+  align-items: center;
+  gap: $spacing-6;
+  text-align: center;
+}
+
+.footerLogo {
+  @include flex-center;
+  gap: $spacing-3;
+}
+
+.logoIcon {
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, $color-primary, color.adjust($color-primary, $lightness: -15%));
+  border-radius: $radius-md;
+  font-size: $text-sm;
+  color: $color-bg-dark;
+}
+
+.logoText {
+  font-family: $font-display;
+  font-size: $text-xl;
+  font-weight: $font-bold;
+  color: $color-text-main;
+  letter-spacing: -0.02em;
+}
+
+.footerText {
+  font-size: $text-sm;
+  color: $color-text-muted;
+}
+
+.footerLinks {
+  @include flex-center;
+  gap: $spacing-6;
+  flex-wrap: wrap;
+
+  a {
+    font-size: $text-sm;
+    color: $color-text-muted;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+// Animation
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

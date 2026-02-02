@@ -41,15 +41,30 @@ public class CineSocialDbContextFactory : IDesignTimeDbContextFactory<CineSocial
             return connectionString;
         }
 
-        // Try to load from .env file
+        // Try to load from .env file - check multiple locations
         var projectRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".."));
-        var envPath = System.IO.Path.Combine(projectRoot, ".env");
-
-        Console.WriteLine($"Looking for .env at: {envPath}");
-        Console.WriteLine($"File exists: {File.Exists(envPath)}");
-
-        if (!File.Exists(envPath))
+        var possiblePaths = new[]
         {
+            System.IO.Path.Combine(projectRoot, "infrastructure", ".env"),
+            System.IO.Path.Combine(projectRoot, ".env"),
+            System.IO.Path.Combine(projectRoot, "backend", ".env")
+        };
+
+        string? envPath = null;
+        foreach (var path in possiblePaths)
+        {
+            Console.WriteLine($"Looking for .env at: {path}");
+            if (File.Exists(path))
+            {
+                envPath = path;
+                Console.WriteLine($"Found .env at: {path}");
+                break;
+            }
+        }
+
+        if (envPath == null)
+        {
+            Console.WriteLine(".env file not found in any expected location");
             return null;
         }
 

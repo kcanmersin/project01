@@ -1,4 +1,5 @@
 using CineSocial.Infrastructure.Persistence;
+using CineSocial.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CineSocial.Application.Interfaces;
@@ -31,13 +32,18 @@ public static class DependencyInjection
             Console.WriteLine($"[DependencyInjection] Registering DbContext with connection string");
             services.AddDbContext<CineSocialDbContext>(options =>
                 options.UseNpgsql(connectionString));
-                
+
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<CineSocialDbContext>());
         }
         else
         {
             Console.WriteLine($"[DependencyInjection] WARNING: No connection string, DbContext NOT registered!");
         }
+
+        // Auth Services
+        services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IEmailVerificationService, EmailVerificationService>();
+        services.AddScoped<IExternalAuthService, GoogleAuthService>();
 
         return services;
     }

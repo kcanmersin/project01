@@ -1,5 +1,3 @@
-using CineSocial.Domain.Enums;
-
 namespace CineSocial.Application.Features.Auth;
 
 public record UserDto(
@@ -9,7 +7,9 @@ public record UserDto(
     string Role,
     DateTime CreatedAt,
     Guid? ProfileImageId,
-    Guid? CoverImageId
+    Guid? CoverImageId,
+    bool IsEmailVerified,
+    bool HasGoogleLinked
 );
 
 public record AuthResponseDto(
@@ -26,4 +26,23 @@ public record RegisterRequest(
 public record LoginRequest(
     string EmailOrUsername,
     string Password
+);
+
+public record GoogleLoginRequest(
+    string IdToken
+);
+
+public record VerifyEmailRequest(
+    string Token
+);
+
+public record ResendVerificationRequest(
+    string Email
+);
+
+public record EmailVerificationStatusDto(
+    bool IsEmailVerified,
+    DateTime? EmailVerifiedAt,
+    bool HasPassword,
+    bool HasGoogleLinked
 );

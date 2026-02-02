@@ -19,20 +19,26 @@ public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, R
         var user = await _context.Set<User>()
             .AsNoTracking()
             .Where(u => u.Id == request.UserId && !u.IsDeleted)
-            .Select(u => new UserDto(
-                u.Id,
-                u.Email,
-                u.Username,
-                u.Role.ToString(),
-                u.CreatedAt,
-                u.ProfileImageId,
-                u.CoverImageId
-            ))
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user == null)
-            return Result<UserDto>.Failure("User not found", 401);
+            return Result<UserDto>.Failure("Kullanıcı bulunamadı", 401);
 
-        return Result<UserDto>.Success(user);
+        var hasGoogleLinked = await _context.Set<UserExternalLogin>()
+            .AnyAsync(e => e.UserId == user.Id && e.Provider == "Google" && !e.IsDeleted, cancellationToken);
+
+        var userDto = new UserDto(
+            user.Id,
+            user.Email,
+            user.Username,
+            user.Role.ToString(),
+            user.CreatedAt,
+            user.ProfileImageId,
+            user.CoverImageId,
+            user.IsEmailVerified,
+            hasGoogleLinked
+        );
+
+        return Result<UserDto>.Success(userDto);
     }
 }

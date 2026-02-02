@@ -1,0 +1,300 @@
+@use 'variables' as *;
+
+// Flexbox Utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Glass Panels
+@mixin glass-panel {
+  background: $glass-bg;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid $glass-border;
+  box-shadow: $glass-shadow;
+  border-radius: $radius-xl;
+}
+
+@mixin glass-panel-subtle {
+  background: $glass-bg-light;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: $radius-lg;
+}
+
+// Text Effects
+@mixin neon-text($color) {
+  color: $color;
+  text-shadow: 0 0 10px rgba($color, 0.5), 0 0 20px rgba($color, 0.3);
+}
+
+@mixin gold-text {
+  background: linear-gradient(135deg, $color-primary 0%, $color-highlight 50%, $color-primary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin text-gradient($from, $to) {
+  background: linear-gradient(135deg, $from, $to);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Positioning
+@mixin absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin fixed-fill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// Typography
+@mixin heading-display {
+  font-family: $font-display;
+  font-weight: $font-bold;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+@mixin heading-body {
+  font-family: $font-body;
+  font-weight: $font-semibold;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+@mixin body-text {
+  font-family: $font-body;
+  font-weight: $font-regular;
+  line-height: 1.6;
+}
+
+// Truncation
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Scrollbar
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color-primary, 0.3);
+    border-radius: $radius-full;
+
+    &:hover {
+      background: rgba($color-primary, 0.5);
+    }
+  }
+}
+
+@mixin hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Buttons
+@mixin button-base {
+  @include flex-center;
+  gap: $spacing-2;
+  font-family: $font-body;
+  font-weight: $font-medium;
+  border-radius: $radius-lg;
+  transition: all $transition-base;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: linear-gradient(135deg, $color-primary, darken($color-primary, 10%));
+  color: $color-bg-dark;
+  box-shadow: $shadow-glow-gold;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba($color-primary, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: $color-text-main;
+  border: 1px solid $glass-border;
+
+  &:hover:not(:disabled) {
+    background: $glass-bg-light;
+    border-color: rgba($color-primary, 0.3);
+  }
+}
+
+// Cards
+@mixin card-hover {
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: $shadow-xl, $shadow-glow-gold;
+  }
+}
+
+// Responsive Breakpoints
+@mixin sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @media (min-width: $breakpoint-2xl) {
+    @content;
+  }
+}
+
+// Container
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+}
+
+// Aspect Ratio
+@mixin aspect-ratio($width, $height) {
+  aspect-ratio: #{$width} / #{$height};
+}
+
+// Focus Ring
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Skeleton Loading
+@mixin skeleton {
+  background: linear-gradient(
+    90deg,
+    $color-bg-card 0%,
+    $color-bg-elevated 50%,
+    $color-bg-card 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Film Grain Effect (optional overlay)
+@mixin film-grain {
+  &::after {
+    content: '';
+    @include absolute-fill;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+}
+
+// Vignette Effect
+@mixin vignette {
+  &::before {
+    content: '';
+    @include absolute-fill;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  }
+}

@@ -14,6 +14,8 @@ public class CineSocialDbContext : DbContext, IApplicationDbContext
 
     // User Entities
     public DbSet<User> Users { get; set; }
+    public DbSet<UserExternalLogin> UserExternalLogins { get; set; }
+    public DbSet<EmailVerificationToken> EmailVerificationTokens { get; set; }
 
     // Media Entities
     public DbSet<StoredImage> StoredImages { get; set; }

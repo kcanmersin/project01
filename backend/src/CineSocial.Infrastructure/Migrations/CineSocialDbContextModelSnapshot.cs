@@ -509,48 +509,6 @@ namespace CineSocial.Infrastructure.Migrations
                     b.ToTable("MovieProductionCompanies", (string)null);
                 });
 
-            modelBuilder.Entity("CineSocial.Domain.Entities.Movie.MovieRating", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Rating")
-                        .HasPrecision(3, 1)
-                        .HasColumnType("numeric(3,1)");
-
-                    b.Property<string>("Review")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId", "MovieId")
-                        .IsUnique();
-
-                    b.ToTable("MovieRatings", (string)null);
-                });
-
             modelBuilder.Entity("CineSocial.Domain.Entities.Movie.MovieVideo", b =>
                 {
                     b.Property<Guid>("Id")
@@ -685,16 +643,11 @@ namespace CineSocial.Infrastructure.Migrations
                     b.ToTable("ProductionCompanies", (string)null);
                 });
 
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Comment", b =>
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.EmailVerificationToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -702,577 +655,42 @@ namespace CineSocial.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("DownvoteCount")
-                        .HasColumnType("integer");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid?>("ParentCommentId")
-                        .HasColumnType("uuid");
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("boolean");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("ReplyCount")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("TargetId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("TargetType")
+                    b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UpvoteCount")
-                        .HasColumnType("integer");
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentCommentId");
-
-                    b.HasIndex("PostId");
+                    b.HasIndex("Token")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("TargetType", "TargetId");
-
-                    b.ToTable("Comments", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.CommentReaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CommentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ReactionType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("UserId", "CommentId")
-                        .IsUnique();
-
-                    b.ToTable("CommentReactions", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Community", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("BannerUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<string>("IconUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPrivate")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("MemberCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<int>("PostCount")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("RequiresApproval")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Communities", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.CommunityMember", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("BanReason")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<DateTime?>("BannedUntil")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("CommunityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsBanned")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPending")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("JoinedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("CommunityId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("CommunityMembers", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.MovieList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("CoverImageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ListType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("MovieCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId", "ListType")
-                        .IsUnique()
-                        .HasFilter("\"ListType\" IN ('Watchlist', 'Favorites')");
-
-                    b.ToTable("MovieLists", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.MovieListItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("MovieListId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("MovieListId", "MovieId")
-                        .IsUnique();
-
-                    b.HasIndex("MovieListId", "Order");
-
-                    b.ToTable("MovieListItems", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Post", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("CommentCount")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("CommunityId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(40000)
-                        .HasColumnType("character varying(40000)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("DownvoteCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImageId")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsLocked")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPinned")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LinkUrl")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.Property<Guid?>("MovieId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("character varying(300)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("UpvoteCount")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommunityId");
-
-                    b.HasIndex("CreatedAt");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("CommunityId", "IsPinned", "CreatedAt");
-
-                    b.ToTable("Posts", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.PostImage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ImageId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostImages", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.PostVote", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("PostId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("PostVotes", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.SavedPost", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId", "PostId")
-                        .IsUnique();
-
-                    b.ToTable("SavedPosts", (string)null);
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.UserBlock", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BlockedId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BlockerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlockedId");
-
-                    b.HasIndex("BlockerId");
-
-                    b.HasIndex("BlockerId", "BlockedId")
-                        .IsUnique();
-
-                    b.ToTable("UserBlocks");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.UserFollow", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("FollowedId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("FollowerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FollowedId");
-
-                    b.HasIndex("FollowerId");
-
-                    b.HasIndex("FollowerId", "FollowedId")
-                        .IsUnique();
-
-                    b.ToTable("UserFollows");
+                    b.ToTable("EmailVerificationTokens", (string)null);
                 });
 
             modelBuilder.Entity("CineSocial.Domain.Entities.User.User", b =>
@@ -1295,14 +713,21 @@ namespace CineSocial.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<DateTime?>("EmailVerifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
@@ -1331,6 +756,67 @@ namespace CineSocial.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.UserExternalLogin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("ProviderEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("ProviderProfilePictureUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
+
+                    b.Property<string>("ProviderUserId")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<DateTime?>("TokenExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Provider", "ProviderUserId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId", "Provider")
+                        .IsUnique();
+
+                    b.ToTable("UserExternalLogins", (string)null);
                 });
 
             modelBuilder.Entity("CineSocial.Domain.Entities.Movie.MovieCast", b =>
@@ -1496,17 +982,6 @@ namespace CineSocial.Infrastructure.Migrations
                     b.Navigation("ProductionCompany");
                 });
 
-            modelBuilder.Entity("CineSocial.Domain.Entities.Movie.MovieRating", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Movie.MovieEntity", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-                });
-
             modelBuilder.Entity("CineSocial.Domain.Entities.Movie.MovieVideo", b =>
                 {
                     b.HasOne("CineSocial.Domain.Entities.Movie.MovieEntity", "Movie")
@@ -1518,122 +993,26 @@ namespace CineSocial.Infrastructure.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Comment", b =>
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.EmailVerificationToken", b =>
                 {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Comment", "ParentComment")
-                        .WithMany("Replies")
-                        .HasForeignKey("ParentCommentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("CineSocial.Domain.Entities.User.User", "User")
+                        .WithMany("VerificationTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("CineSocial.Domain.Entities.Social.Post", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId");
-
-                    b.Navigation("ParentComment");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.CommentReaction", b =>
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.UserExternalLogin", b =>
                 {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Comment", "Comment")
-                        .WithMany("Reactions")
-                        .HasForeignKey("CommentId")
+                    b.HasOne("CineSocial.Domain.Entities.User.User", "User")
+                        .WithMany("ExternalLogins")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comment");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.CommunityMember", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Community", "Community")
-                        .WithMany("Members")
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Community");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.MovieListItem", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Movie.MovieEntity", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CineSocial.Domain.Entities.Social.MovieList", "MovieList")
-                        .WithMany("Items")
-                        .HasForeignKey("MovieListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("MovieList");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Post", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Community", "Community")
-                        .WithMany("Posts")
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Community");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.PostImage", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Post", "Post")
-                        .WithMany("Images")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.PostVote", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Post", "Post")
-                        .WithMany("Votes")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.SavedPost", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.Social.Post", "Post")
-                        .WithMany("SavedBy")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.UserFollow", b =>
-                {
-                    b.HasOne("CineSocial.Domain.Entities.User.User", "Followed")
-                        .WithMany()
-                        .HasForeignKey("FollowedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CineSocial.Domain.Entities.User.User", "Follower")
-                        .WithMany()
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Followed");
-
-                    b.Navigation("Follower");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CineSocial.Domain.Entities.Movie.Collection", b =>
@@ -1696,34 +1075,11 @@ namespace CineSocial.Infrastructure.Migrations
                     b.Navigation("MovieProductionCompanies");
                 });
 
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Comment", b =>
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.User", b =>
                 {
-                    b.Navigation("Reactions");
+                    b.Navigation("ExternalLogins");
 
-                    b.Navigation("Replies");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Community", b =>
-                {
-                    b.Navigation("Members");
-
-                    b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.MovieList", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("CineSocial.Domain.Entities.Social.Post", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Images");
-
-                    b.Navigation("SavedBy");
-
-                    b.Navigation("Votes");
+                    b.Navigation("VerificationTokens");
                 });
 #pragma warning restore 612, 618
         }
