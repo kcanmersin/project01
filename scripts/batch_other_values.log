@@ -1,0 +1,694 @@
+2025-12-20 18:41:14,534 - INFO - [ENV] Loaded 4 environment variables
+2025-12-20 18:41:14,538 - INFO - [DB] Using Neon PostgreSQL database
+2025-12-20 18:41:14,931 - INFO - Fetching all movie IDs from the database...
+2025-12-20 18:41:16,387 - INFO - Found 130626 total movies. 130626 movies need processing.
+2025-12-20 18:41:16,392 - INFO - Starting to process 130626 movies in 5226 batches of size 25.
+2025-12-20 18:41:16,393 - INFO - Using 20 parallel workers for faster processing.
+2025-12-20 18:41:16,393 - INFO - --- Processing Batch 1/5226 ---
+2025-12-20 18:41:19,270 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:21,837 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:21,848 - INFO - --- Finished Batch 1/5226. Progress saved. ---
+2025-12-20 18:41:21,850 - INFO - --- Processing Batch 2/5226 ---
+2025-12-20 18:41:24,755 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:27,526 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:27,528 - INFO - --- Finished Batch 2/5226. Progress saved. ---
+2025-12-20 18:41:27,528 - INFO - --- Processing Batch 3/5226 ---
+2025-12-20 18:41:30,360 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:33,175 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:33,176 - INFO - --- Finished Batch 3/5226. Progress saved. ---
+2025-12-20 18:41:33,176 - INFO - --- Processing Batch 4/5226 ---
+2025-12-20 18:41:36,265 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:38,867 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:38,868 - INFO - --- Finished Batch 4/5226. Progress saved. ---
+2025-12-20 18:41:38,870 - INFO - --- Processing Batch 5/5226 ---
+2025-12-20 18:41:41,823 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:44,901 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:44,903 - INFO - --- Finished Batch 5/5226. Progress saved. ---
+2025-12-20 18:41:44,903 - INFO - --- Processing Batch 6/5226 ---
+2025-12-20 18:41:47,686 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:50,437 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:50,438 - INFO - --- Finished Batch 6/5226. Progress saved. ---
+2025-12-20 18:41:50,438 - INFO - --- Processing Batch 7/5226 ---
+2025-12-20 18:41:53,632 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:41:56,503 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:41:56,506 - INFO - --- Finished Batch 7/5226. Progress saved. ---
+2025-12-20 18:41:56,507 - INFO - --- Processing Batch 8/5226 ---
+2025-12-20 18:41:59,453 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:04,396 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:04,398 - INFO - --- Finished Batch 8/5226. Progress saved. ---
+2025-12-20 18:42:04,400 - INFO - --- Processing Batch 9/5226 ---
+2025-12-20 18:42:07,298 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:10,161 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:10,163 - INFO - --- Finished Batch 9/5226. Progress saved. ---
+2025-12-20 18:42:10,164 - INFO - --- Processing Batch 10/5226 ---
+2025-12-20 18:42:12,970 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:16,052 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:16,054 - INFO - --- Finished Batch 10/5226. Progress saved. ---
+2025-12-20 18:42:16,054 - INFO - --- Processing Batch 11/5226 ---
+2025-12-20 18:42:19,008 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:22,002 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:22,005 - INFO - --- Finished Batch 11/5226. Progress saved. ---
+2025-12-20 18:42:22,005 - INFO - --- Processing Batch 12/5226 ---
+2025-12-20 18:42:24,846 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:27,324 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:27,325 - INFO - --- Finished Batch 12/5226. Progress saved. ---
+2025-12-20 18:42:27,325 - INFO - --- Processing Batch 13/5226 ---
+2025-12-20 18:42:30,078 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:32,917 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:32,918 - INFO - --- Finished Batch 13/5226. Progress saved. ---
+2025-12-20 18:42:32,918 - INFO - --- Processing Batch 14/5226 ---
+2025-12-20 18:42:35,877 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:39,135 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:39,136 - INFO - --- Finished Batch 14/5226. Progress saved. ---
+2025-12-20 18:42:39,136 - INFO - --- Processing Batch 15/5226 ---
+2025-12-20 18:42:42,131 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:47,007 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:47,009 - INFO - --- Finished Batch 15/5226. Progress saved. ---
+2025-12-20 18:42:47,009 - INFO - --- Processing Batch 16/5226 ---
+2025-12-20 18:42:49,757 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:53,450 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:53,454 - INFO - --- Finished Batch 16/5226. Progress saved. ---
+2025-12-20 18:42:53,454 - INFO - --- Processing Batch 17/5226 ---
+2025-12-20 18:42:56,170 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:42:59,566 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:42:59,568 - INFO - --- Finished Batch 17/5226. Progress saved. ---
+2025-12-20 18:42:59,568 - INFO - --- Processing Batch 18/5226 ---
+2025-12-20 18:43:02,159 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:04,871 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:04,873 - INFO - --- Finished Batch 18/5226. Progress saved. ---
+2025-12-20 18:43:04,873 - INFO - --- Processing Batch 19/5226 ---
+2025-12-20 18:43:08,018 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:11,024 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:11,025 - INFO - --- Finished Batch 19/5226. Progress saved. ---
+2025-12-20 18:43:11,025 - INFO - --- Processing Batch 20/5226 ---
+2025-12-20 18:43:13,557 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:16,373 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:16,374 - INFO - --- Finished Batch 20/5226. Progress saved. ---
+2025-12-20 18:43:16,374 - INFO - --- Processing Batch 21/5226 ---
+2025-12-20 18:43:19,071 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:23,076 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:23,081 - INFO - --- Finished Batch 21/5226. Progress saved. ---
+2025-12-20 18:43:23,082 - INFO - --- Processing Batch 22/5226 ---
+2025-12-20 18:43:25,971 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:28,495 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:28,497 - INFO - --- Finished Batch 22/5226. Progress saved. ---
+2025-12-20 18:43:28,498 - INFO - --- Processing Batch 23/5226 ---
+2025-12-20 18:43:31,320 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:34,190 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:34,192 - INFO - --- Finished Batch 23/5226. Progress saved. ---
+2025-12-20 18:43:34,192 - INFO - --- Processing Batch 24/5226 ---
+2025-12-20 18:43:36,766 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:40,206 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:40,211 - INFO - --- Finished Batch 24/5226. Progress saved. ---
+2025-12-20 18:43:40,212 - INFO - --- Processing Batch 25/5226 ---
+2025-12-20 18:43:42,698 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:45,712 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:45,714 - INFO - --- Finished Batch 25/5226. Progress saved. ---
+2025-12-20 18:43:45,714 - INFO - --- Processing Batch 26/5226 ---
+2025-12-20 18:43:47,979 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:51,516 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:51,518 - INFO - --- Finished Batch 26/5226. Progress saved. ---
+2025-12-20 18:43:51,518 - INFO - --- Processing Batch 27/5226 ---
+2025-12-20 18:43:54,181 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:43:56,752 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:43:56,754 - INFO - --- Finished Batch 27/5226. Progress saved. ---
+2025-12-20 18:43:56,755 - INFO - --- Processing Batch 28/5226 ---
+2025-12-20 18:43:59,592 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:02,208 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:02,211 - INFO - --- Finished Batch 28/5226. Progress saved. ---
+2025-12-20 18:44:02,211 - INFO - --- Processing Batch 29/5226 ---
+2025-12-20 18:44:05,208 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:08,517 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:08,520 - INFO - --- Finished Batch 29/5226. Progress saved. ---
+2025-12-20 18:44:08,520 - INFO - --- Processing Batch 30/5226 ---
+2025-12-20 18:44:11,275 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:13,981 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:13,983 - INFO - --- Finished Batch 30/5226. Progress saved. ---
+2025-12-20 18:44:13,985 - INFO - --- Processing Batch 31/5226 ---
+2025-12-20 18:44:16,774 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:19,829 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:19,831 - INFO - --- Finished Batch 31/5226. Progress saved. ---
+2025-12-20 18:44:19,833 - INFO - --- Processing Batch 32/5226 ---
+2025-12-20 18:44:22,655 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:25,220 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:25,222 - INFO - --- Finished Batch 32/5226. Progress saved. ---
+2025-12-20 18:44:25,222 - INFO - --- Processing Batch 33/5226 ---
+2025-12-20 18:44:28,106 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:30,597 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:30,601 - INFO - --- Finished Batch 33/5226. Progress saved. ---
+2025-12-20 18:44:30,601 - INFO - --- Processing Batch 34/5226 ---
+2025-12-20 18:44:33,630 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:36,218 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:36,223 - INFO - --- Finished Batch 34/5226. Progress saved. ---
+2025-12-20 18:44:36,223 - INFO - --- Processing Batch 35/5226 ---
+2025-12-20 18:44:39,230 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:42,883 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:42,887 - INFO - --- Finished Batch 35/5226. Progress saved. ---
+2025-12-20 18:44:42,887 - INFO - --- Processing Batch 36/5226 ---
+2025-12-20 18:44:45,722 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:49,667 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:49,670 - INFO - --- Finished Batch 36/5226. Progress saved. ---
+2025-12-20 18:44:49,671 - INFO - --- Processing Batch 37/5226 ---
+2025-12-20 18:44:53,020 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:44:56,263 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:44:56,268 - INFO - --- Finished Batch 37/5226. Progress saved. ---
+2025-12-20 18:44:56,268 - INFO - --- Processing Batch 38/5226 ---
+2025-12-20 18:44:59,305 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:01,795 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:01,797 - INFO - --- Finished Batch 38/5226. Progress saved. ---
+2025-12-20 18:45:01,797 - INFO - --- Processing Batch 39/5226 ---
+2025-12-20 18:45:04,567 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:07,799 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:07,802 - INFO - --- Finished Batch 39/5226. Progress saved. ---
+2025-12-20 18:45:07,802 - INFO - --- Processing Batch 40/5226 ---
+2025-12-20 18:45:10,692 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:13,059 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:13,063 - INFO - --- Finished Batch 40/5226. Progress saved. ---
+2025-12-20 18:45:13,063 - INFO - --- Processing Batch 41/5226 ---
+2025-12-20 18:45:16,047 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:18,670 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:18,673 - INFO - --- Finished Batch 41/5226. Progress saved. ---
+2025-12-20 18:45:18,673 - INFO - --- Processing Batch 42/5226 ---
+2025-12-20 18:45:22,077 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:24,956 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:24,961 - INFO - --- Finished Batch 42/5226. Progress saved. ---
+2025-12-20 18:45:24,962 - INFO - --- Processing Batch 43/5226 ---
+2025-12-20 18:45:27,711 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:30,125 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:30,128 - INFO - --- Finished Batch 43/5226. Progress saved. ---
+2025-12-20 18:45:30,128 - INFO - --- Processing Batch 44/5226 ---
+2025-12-20 18:45:32,650 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:35,548 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:35,549 - INFO - --- Finished Batch 44/5226. Progress saved. ---
+2025-12-20 18:45:35,550 - INFO - --- Processing Batch 45/5226 ---
+2025-12-20 18:45:38,051 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:41,664 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:41,666 - INFO - --- Finished Batch 45/5226. Progress saved. ---
+2025-12-20 18:45:41,666 - INFO - --- Processing Batch 46/5226 ---
+2025-12-20 18:45:44,432 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:47,301 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:47,304 - INFO - --- Finished Batch 46/5226. Progress saved. ---
+2025-12-20 18:45:47,304 - INFO - --- Processing Batch 47/5226 ---
+2025-12-20 18:45:50,453 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:45:53,069 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:45:53,073 - INFO - --- Finished Batch 47/5226. Progress saved. ---
+2025-12-20 18:45:53,073 - INFO - --- Processing Batch 48/5226 ---
+2025-12-20 18:45:56,935 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:02,255 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:02,259 - INFO - --- Finished Batch 48/5226. Progress saved. ---
+2025-12-20 18:46:02,260 - INFO - --- Processing Batch 49/5226 ---
+2025-12-20 18:46:06,209 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:09,146 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:09,150 - INFO - --- Finished Batch 49/5226. Progress saved. ---
+2025-12-20 18:46:09,150 - INFO - --- Processing Batch 50/5226 ---
+2025-12-20 18:46:12,472 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:15,493 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:15,497 - INFO - --- Finished Batch 50/5226. Progress saved. ---
+2025-12-20 18:46:15,497 - INFO - --- Processing Batch 51/5226 ---
+2025-12-20 18:46:18,560 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:22,131 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:22,135 - INFO - --- Finished Batch 51/5226. Progress saved. ---
+2025-12-20 18:46:22,135 - INFO - --- Processing Batch 52/5226 ---
+2025-12-20 18:46:25,073 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:28,206 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:28,207 - INFO - --- Finished Batch 52/5226. Progress saved. ---
+2025-12-20 18:46:28,209 - INFO - --- Processing Batch 53/5226 ---
+2025-12-20 18:46:31,016 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:33,876 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:33,879 - INFO - --- Finished Batch 53/5226. Progress saved. ---
+2025-12-20 18:46:33,879 - INFO - --- Processing Batch 54/5226 ---
+2025-12-20 18:46:36,727 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:39,317 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:39,320 - INFO - --- Finished Batch 54/5226. Progress saved. ---
+2025-12-20 18:46:39,320 - INFO - --- Processing Batch 55/5226 ---
+2025-12-20 18:46:42,155 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:44,682 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:44,684 - INFO - --- Finished Batch 55/5226. Progress saved. ---
+2025-12-20 18:46:44,684 - INFO - --- Processing Batch 56/5226 ---
+2025-12-20 18:46:48,227 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:46:54,340 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:46:54,343 - INFO - --- Finished Batch 56/5226. Progress saved. ---
+2025-12-20 18:46:54,343 - INFO - --- Processing Batch 57/5226 ---
+2025-12-20 18:46:57,607 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:00,616 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:00,620 - INFO - --- Finished Batch 57/5226. Progress saved. ---
+2025-12-20 18:47:00,620 - INFO - --- Processing Batch 58/5226 ---
+2025-12-20 18:47:03,475 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:06,997 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:07,000 - INFO - --- Finished Batch 58/5226. Progress saved. ---
+2025-12-20 18:47:07,000 - INFO - --- Processing Batch 59/5226 ---
+2025-12-20 18:47:10,231 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:13,370 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:13,375 - INFO - --- Finished Batch 59/5226. Progress saved. ---
+2025-12-20 18:47:13,375 - INFO - --- Processing Batch 60/5226 ---
+2025-12-20 18:47:16,829 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:21,156 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:21,159 - INFO - --- Finished Batch 60/5226. Progress saved. ---
+2025-12-20 18:47:21,159 - INFO - --- Processing Batch 61/5226 ---
+2025-12-20 18:47:24,226 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:27,334 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:27,346 - INFO - --- Finished Batch 61/5226. Progress saved. ---
+2025-12-20 18:47:27,347 - INFO - --- Processing Batch 62/5226 ---
+2025-12-20 18:47:30,836 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:34,817 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:34,822 - INFO - --- Finished Batch 62/5226. Progress saved. ---
+2025-12-20 18:47:34,822 - INFO - --- Processing Batch 63/5226 ---
+2025-12-20 18:47:38,430 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:43,521 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:43,524 - INFO - --- Finished Batch 63/5226. Progress saved. ---
+2025-12-20 18:47:43,524 - INFO - --- Processing Batch 64/5226 ---
+2025-12-20 18:47:47,076 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:49,713 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:49,717 - INFO - --- Finished Batch 64/5226. Progress saved. ---
+2025-12-20 18:47:49,717 - INFO - --- Processing Batch 65/5226 ---
+2025-12-20 18:47:52,557 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:47:57,110 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:47:57,113 - INFO - --- Finished Batch 65/5226. Progress saved. ---
+2025-12-20 18:47:57,113 - INFO - --- Processing Batch 66/5226 ---
+2025-12-20 18:48:00,268 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:02,923 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:02,927 - INFO - --- Finished Batch 66/5226. Progress saved. ---
+2025-12-20 18:48:02,927 - INFO - --- Processing Batch 67/5226 ---
+2025-12-20 18:48:06,444 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:09,267 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:09,271 - INFO - --- Finished Batch 67/5226. Progress saved. ---
+2025-12-20 18:48:09,272 - INFO - --- Processing Batch 68/5226 ---
+2025-12-20 18:48:12,043 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:14,671 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:14,672 - INFO - --- Finished Batch 68/5226. Progress saved. ---
+2025-12-20 18:48:14,673 - INFO - --- Processing Batch 69/5226 ---
+2025-12-20 18:48:17,553 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:20,610 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:20,614 - INFO - --- Finished Batch 69/5226. Progress saved. ---
+2025-12-20 18:48:20,614 - INFO - --- Processing Batch 70/5226 ---
+2025-12-20 18:48:23,514 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:26,738 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:26,741 - INFO - --- Finished Batch 70/5226. Progress saved. ---
+2025-12-20 18:48:26,741 - INFO - --- Processing Batch 71/5226 ---
+2025-12-20 18:48:30,135 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:34,666 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:34,672 - INFO - --- Finished Batch 71/5226. Progress saved. ---
+2025-12-20 18:48:34,673 - INFO - --- Processing Batch 72/5226 ---
+2025-12-20 18:48:37,890 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:41,242 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:41,245 - INFO - --- Finished Batch 72/5226. Progress saved. ---
+2025-12-20 18:48:41,245 - INFO - --- Processing Batch 73/5226 ---
+2025-12-20 18:48:44,514 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:47,817 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:47,821 - INFO - --- Finished Batch 73/5226. Progress saved. ---
+2025-12-20 18:48:47,822 - INFO - --- Processing Batch 74/5226 ---
+2025-12-20 18:48:51,055 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:48:53,966 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:48:53,970 - INFO - --- Finished Batch 74/5226. Progress saved. ---
+2025-12-20 18:48:53,970 - INFO - --- Processing Batch 75/5226 ---
+2025-12-20 18:48:57,085 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:00,291 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:00,295 - INFO - --- Finished Batch 75/5226. Progress saved. ---
+2025-12-20 18:49:00,295 - INFO - --- Processing Batch 76/5226 ---
+2025-12-20 18:49:03,353 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:08,357 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:08,361 - INFO - --- Finished Batch 76/5226. Progress saved. ---
+2025-12-20 18:49:08,362 - INFO - --- Processing Batch 77/5226 ---
+2025-12-20 18:49:11,120 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:13,963 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:13,967 - INFO - --- Finished Batch 77/5226. Progress saved. ---
+2025-12-20 18:49:13,967 - INFO - --- Processing Batch 78/5226 ---
+2025-12-20 18:49:15,936 - ERROR - API Error 404 for movie TMDB ID 331900
+2025-12-20 18:49:16,824 - INFO - Fetched details for 24/25 movies in this batch.
+2025-12-20 18:49:19,650 - INFO - Successfully saved related data for a batch of 24 movies.
+2025-12-20 18:49:19,652 - INFO - --- Finished Batch 78/5226. Progress saved. ---
+2025-12-20 18:49:19,653 - INFO - --- Processing Batch 79/5226 ---
+2025-12-20 18:49:22,387 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:25,207 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:25,211 - INFO - --- Finished Batch 79/5226. Progress saved. ---
+2025-12-20 18:49:25,211 - INFO - --- Processing Batch 80/5226 ---
+2025-12-20 18:49:27,684 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:31,050 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:31,061 - INFO - --- Finished Batch 80/5226. Progress saved. ---
+2025-12-20 18:49:31,061 - INFO - --- Processing Batch 81/5226 ---
+2025-12-20 18:49:33,535 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:36,613 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:36,616 - INFO - --- Finished Batch 81/5226. Progress saved. ---
+2025-12-20 18:49:36,616 - INFO - --- Processing Batch 82/5226 ---
+2025-12-20 18:49:39,491 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:44,859 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:44,862 - INFO - --- Finished Batch 82/5226. Progress saved. ---
+2025-12-20 18:49:44,862 - INFO - --- Processing Batch 83/5226 ---
+2025-12-20 18:49:47,569 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:49:54,928 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:49:54,932 - INFO - --- Finished Batch 83/5226. Progress saved. ---
+2025-12-20 18:49:54,932 - INFO - --- Processing Batch 84/5226 ---
+2025-12-20 18:50:03,885 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:50:20,074 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:50:20,077 - INFO - --- Finished Batch 84/5226. Progress saved. ---
+2025-12-20 18:50:20,077 - INFO - --- Processing Batch 85/5226 ---
+2025-12-20 18:50:23,520 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:50:26,459 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:50:26,462 - INFO - --- Finished Batch 85/5226. Progress saved. ---
+2025-12-20 18:50:26,462 - INFO - --- Processing Batch 86/5226 ---
+2025-12-20 18:50:28,950 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:50:34,884 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:50:34,890 - INFO - --- Finished Batch 86/5226. Progress saved. ---
+2025-12-20 18:50:34,890 - INFO - --- Processing Batch 87/5226 ---
+2025-12-20 18:50:37,673 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:50:41,476 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:50:41,480 - INFO - --- Finished Batch 87/5226. Progress saved. ---
+2025-12-20 18:50:41,480 - INFO - --- Processing Batch 88/5226 ---
+2025-12-20 18:50:44,103 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:50:52,987 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:50:52,990 - INFO - --- Finished Batch 88/5226. Progress saved. ---
+2025-12-20 18:50:52,990 - INFO - --- Processing Batch 89/5226 ---
+2025-12-20 18:50:56,005 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:08,590 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:08,595 - INFO - --- Finished Batch 89/5226. Progress saved. ---
+2025-12-20 18:51:08,595 - INFO - --- Processing Batch 90/5226 ---
+2025-12-20 18:51:11,378 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:16,491 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:16,495 - INFO - --- Finished Batch 90/5226. Progress saved. ---
+2025-12-20 18:51:16,496 - INFO - --- Processing Batch 91/5226 ---
+2025-12-20 18:51:19,394 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:21,958 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:21,962 - INFO - --- Finished Batch 91/5226. Progress saved. ---
+2025-12-20 18:51:21,963 - INFO - --- Processing Batch 92/5226 ---
+2025-12-20 18:51:24,409 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:27,029 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:27,032 - INFO - --- Finished Batch 92/5226. Progress saved. ---
+2025-12-20 18:51:27,033 - INFO - --- Processing Batch 93/5226 ---
+2025-12-20 18:51:29,542 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:31,921 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:31,924 - INFO - --- Finished Batch 93/5226. Progress saved. ---
+2025-12-20 18:51:31,924 - INFO - --- Processing Batch 94/5226 ---
+2025-12-20 18:51:34,470 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:37,505 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:37,508 - INFO - --- Finished Batch 94/5226. Progress saved. ---
+2025-12-20 18:51:37,508 - INFO - --- Processing Batch 95/5226 ---
+2025-12-20 18:51:40,198 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:42,533 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:42,543 - INFO - --- Finished Batch 95/5226. Progress saved. ---
+2025-12-20 18:51:42,543 - INFO - --- Processing Batch 96/5226 ---
+2025-12-20 18:51:45,183 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:48,408 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:48,411 - INFO - --- Finished Batch 96/5226. Progress saved. ---
+2025-12-20 18:51:48,411 - INFO - --- Processing Batch 97/5226 ---
+2025-12-20 18:51:50,900 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:53,496 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:53,498 - INFO - --- Finished Batch 97/5226. Progress saved. ---
+2025-12-20 18:51:53,498 - INFO - --- Processing Batch 98/5226 ---
+2025-12-20 18:51:55,975 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:51:58,443 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:51:58,446 - INFO - --- Finished Batch 98/5226. Progress saved. ---
+2025-12-20 18:51:58,446 - INFO - --- Processing Batch 99/5226 ---
+2025-12-20 18:52:00,921 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:05,401 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:05,405 - INFO - --- Finished Batch 99/5226. Progress saved. ---
+2025-12-20 18:52:05,405 - INFO - --- Processing Batch 100/5226 ---
+2025-12-20 18:52:07,799 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:11,888 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:11,891 - INFO - --- Finished Batch 100/5226. Progress saved. ---
+2025-12-20 18:52:11,891 - INFO - --- Processing Batch 101/5226 ---
+2025-12-20 18:52:14,351 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:17,330 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:17,334 - INFO - --- Finished Batch 101/5226. Progress saved. ---
+2025-12-20 18:52:17,334 - INFO - --- Processing Batch 102/5226 ---
+2025-12-20 18:52:20,141 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:22,676 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:22,678 - INFO - --- Finished Batch 102/5226. Progress saved. ---
+2025-12-20 18:52:22,678 - INFO - --- Processing Batch 103/5226 ---
+2025-12-20 18:52:25,213 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:27,688 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:27,691 - INFO - --- Finished Batch 103/5226. Progress saved. ---
+2025-12-20 18:52:27,691 - INFO - --- Processing Batch 104/5226 ---
+2025-12-20 18:52:30,253 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:33,722 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:33,726 - INFO - --- Finished Batch 104/5226. Progress saved. ---
+2025-12-20 18:52:33,727 - INFO - --- Processing Batch 105/5226 ---
+2025-12-20 18:52:36,283 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:39,009 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:39,011 - INFO - --- Finished Batch 105/5226. Progress saved. ---
+2025-12-20 18:52:39,012 - INFO - --- Processing Batch 106/5226 ---
+2025-12-20 18:52:43,182 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:45,948 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:45,950 - INFO - --- Finished Batch 106/5226. Progress saved. ---
+2025-12-20 18:52:45,951 - INFO - --- Processing Batch 107/5226 ---
+2025-12-20 18:52:48,233 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:50,710 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:50,712 - INFO - --- Finished Batch 107/5226. Progress saved. ---
+2025-12-20 18:52:50,712 - INFO - --- Processing Batch 108/5226 ---
+2025-12-20 18:52:53,195 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:52:55,712 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:52:55,716 - INFO - --- Finished Batch 108/5226. Progress saved. ---
+2025-12-20 18:52:55,717 - INFO - --- Processing Batch 109/5226 ---
+2025-12-20 18:52:57,950 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:01,237 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:01,242 - INFO - --- Finished Batch 109/5226. Progress saved. ---
+2025-12-20 18:53:01,242 - INFO - --- Processing Batch 110/5226 ---
+2025-12-20 18:53:03,477 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:05,785 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:05,789 - INFO - --- Finished Batch 110/5226. Progress saved. ---
+2025-12-20 18:53:05,789 - INFO - --- Processing Batch 111/5226 ---
+2025-12-20 18:53:08,169 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:10,727 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:10,730 - INFO - --- Finished Batch 111/5226. Progress saved. ---
+2025-12-20 18:53:10,730 - INFO - --- Processing Batch 112/5226 ---
+2025-12-20 18:53:13,265 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:16,449 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:16,451 - INFO - --- Finished Batch 112/5226. Progress saved. ---
+2025-12-20 18:53:16,452 - INFO - --- Processing Batch 113/5226 ---
+2025-12-20 18:53:18,902 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:21,621 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:21,623 - INFO - --- Finished Batch 113/5226. Progress saved. ---
+2025-12-20 18:53:21,624 - INFO - --- Processing Batch 114/5226 ---
+2025-12-20 18:53:24,151 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:27,151 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:27,155 - INFO - --- Finished Batch 114/5226. Progress saved. ---
+2025-12-20 18:53:27,155 - INFO - --- Processing Batch 115/5226 ---
+2025-12-20 18:53:29,370 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:32,079 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:32,083 - INFO - --- Finished Batch 115/5226. Progress saved. ---
+2025-12-20 18:53:32,083 - INFO - --- Processing Batch 116/5226 ---
+2025-12-20 18:53:34,395 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:36,895 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:36,900 - INFO - --- Finished Batch 116/5226. Progress saved. ---
+2025-12-20 18:53:36,900 - INFO - --- Processing Batch 117/5226 ---
+2025-12-20 18:53:39,369 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:41,706 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:41,709 - INFO - --- Finished Batch 117/5226. Progress saved. ---
+2025-12-20 18:53:41,709 - INFO - --- Processing Batch 118/5226 ---
+2025-12-20 18:53:43,952 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:46,327 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:46,330 - INFO - --- Finished Batch 118/5226. Progress saved. ---
+2025-12-20 18:53:46,330 - INFO - --- Processing Batch 119/5226 ---
+2025-12-20 18:53:48,645 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:51,408 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:51,413 - INFO - --- Finished Batch 119/5226. Progress saved. ---
+2025-12-20 18:53:51,413 - INFO - --- Processing Batch 120/5226 ---
+2025-12-20 18:53:53,727 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:53:56,075 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:53:56,078 - INFO - --- Finished Batch 120/5226. Progress saved. ---
+2025-12-20 18:53:56,078 - INFO - --- Processing Batch 121/5226 ---
+2025-12-20 18:53:58,385 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:02,007 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:02,011 - INFO - --- Finished Batch 121/5226. Progress saved. ---
+2025-12-20 18:54:02,011 - INFO - --- Processing Batch 122/5226 ---
+2025-12-20 18:54:04,629 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:07,407 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:07,411 - INFO - --- Finished Batch 122/5226. Progress saved. ---
+2025-12-20 18:54:07,411 - INFO - --- Processing Batch 123/5226 ---
+2025-12-20 18:54:09,838 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:12,298 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:12,302 - INFO - --- Finished Batch 123/5226. Progress saved. ---
+2025-12-20 18:54:12,302 - INFO - --- Processing Batch 124/5226 ---
+2025-12-20 18:54:14,630 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:18,175 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:18,183 - INFO - --- Finished Batch 124/5226. Progress saved. ---
+2025-12-20 18:54:18,183 - INFO - --- Processing Batch 125/5226 ---
+2025-12-20 18:54:20,456 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:22,625 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:22,627 - INFO - --- Finished Batch 125/5226. Progress saved. ---
+2025-12-20 18:54:22,627 - INFO - --- Processing Batch 126/5226 ---
+2025-12-20 18:54:27,380 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:33,794 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:33,798 - INFO - --- Finished Batch 126/5226. Progress saved. ---
+2025-12-20 18:54:33,799 - INFO - --- Processing Batch 127/5226 ---
+2025-12-20 18:54:36,074 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:38,449 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:38,462 - INFO - --- Finished Batch 127/5226. Progress saved. ---
+2025-12-20 18:54:38,462 - INFO - --- Processing Batch 128/5226 ---
+2025-12-20 18:54:40,742 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:43,518 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:43,522 - INFO - --- Finished Batch 128/5226. Progress saved. ---
+2025-12-20 18:54:43,522 - INFO - --- Processing Batch 129/5226 ---
+2025-12-20 18:54:46,021 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:48,948 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:48,951 - INFO - --- Finished Batch 129/5226. Progress saved. ---
+2025-12-20 18:54:48,951 - INFO - --- Processing Batch 130/5226 ---
+2025-12-20 18:54:51,402 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:53,921 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:53,933 - INFO - --- Finished Batch 130/5226. Progress saved. ---
+2025-12-20 18:54:53,933 - INFO - --- Processing Batch 131/5226 ---
+2025-12-20 18:54:56,373 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:54:58,641 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:54:58,644 - INFO - --- Finished Batch 131/5226. Progress saved. ---
+2025-12-20 18:54:58,644 - INFO - --- Processing Batch 132/5226 ---
+2025-12-20 18:55:01,698 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:04,137 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:04,143 - INFO - --- Finished Batch 132/5226. Progress saved. ---
+2025-12-20 18:55:04,144 - INFO - --- Processing Batch 133/5226 ---
+2025-12-20 18:55:06,434 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:10,902 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:10,906 - INFO - --- Finished Batch 133/5226. Progress saved. ---
+2025-12-20 18:55:10,907 - INFO - --- Processing Batch 134/5226 ---
+2025-12-20 18:55:16,204 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:19,575 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:19,583 - INFO - --- Finished Batch 134/5226. Progress saved. ---
+2025-12-20 18:55:19,583 - INFO - --- Processing Batch 135/5226 ---
+2025-12-20 18:55:22,165 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:25,829 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:25,833 - INFO - --- Finished Batch 135/5226. Progress saved. ---
+2025-12-20 18:55:25,834 - INFO - --- Processing Batch 136/5226 ---
+2025-12-20 18:55:28,816 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:31,384 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:31,387 - INFO - --- Finished Batch 136/5226. Progress saved. ---
+2025-12-20 18:55:31,387 - INFO - --- Processing Batch 137/5226 ---
+2025-12-20 18:55:33,789 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:35,899 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:35,902 - INFO - --- Finished Batch 137/5226. Progress saved. ---
+2025-12-20 18:55:35,903 - INFO - --- Processing Batch 138/5226 ---
+2025-12-20 18:55:38,357 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:40,587 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:40,591 - INFO - --- Finished Batch 138/5226. Progress saved. ---
+2025-12-20 18:55:40,591 - INFO - --- Processing Batch 139/5226 ---
+2025-12-20 18:55:43,138 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:52,072 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:52,076 - INFO - --- Finished Batch 139/5226. Progress saved. ---
+2025-12-20 18:55:52,076 - INFO - --- Processing Batch 140/5226 ---
+2025-12-20 18:55:54,551 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:55:56,860 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:55:56,866 - INFO - --- Finished Batch 140/5226. Progress saved. ---
+2025-12-20 18:55:56,866 - INFO - --- Processing Batch 141/5226 ---
+2025-12-20 18:55:59,334 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:02,020 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:02,023 - INFO - --- Finished Batch 141/5226. Progress saved. ---
+2025-12-20 18:56:02,023 - INFO - --- Processing Batch 142/5226 ---
+2025-12-20 18:56:04,110 - ERROR - API Error 404 for movie TMDB ID 367760
+2025-12-20 18:56:04,664 - INFO - Fetched details for 24/25 movies in this batch.
+2025-12-20 18:56:07,397 - INFO - Successfully saved related data for a batch of 24 movies.
+2025-12-20 18:56:07,403 - INFO - --- Finished Batch 142/5226. Progress saved. ---
+2025-12-20 18:56:07,403 - INFO - --- Processing Batch 143/5226 ---
+2025-12-20 18:56:10,395 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:13,288 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:13,292 - INFO - --- Finished Batch 143/5226. Progress saved. ---
+2025-12-20 18:56:13,292 - INFO - --- Processing Batch 144/5226 ---
+2025-12-20 18:56:15,717 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:18,174 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:18,177 - INFO - --- Finished Batch 144/5226. Progress saved. ---
+2025-12-20 18:56:18,177 - INFO - --- Processing Batch 145/5226 ---
+2025-12-20 18:56:20,598 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:22,828 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:22,831 - INFO - --- Finished Batch 145/5226. Progress saved. ---
+2025-12-20 18:56:22,832 - INFO - --- Processing Batch 146/5226 ---
+2025-12-20 18:56:25,405 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:27,664 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:27,669 - INFO - --- Finished Batch 146/5226. Progress saved. ---
+2025-12-20 18:56:27,670 - INFO - --- Processing Batch 147/5226 ---
+2025-12-20 18:56:29,963 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:32,935 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:32,939 - INFO - --- Finished Batch 147/5226. Progress saved. ---
+2025-12-20 18:56:32,939 - INFO - --- Processing Batch 148/5226 ---
+2025-12-20 18:56:35,939 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:38,154 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:38,157 - INFO - --- Finished Batch 148/5226. Progress saved. ---
+2025-12-20 18:56:38,157 - INFO - --- Processing Batch 149/5226 ---
+2025-12-20 18:56:40,621 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:42,963 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:42,967 - INFO - --- Finished Batch 149/5226. Progress saved. ---
+2025-12-20 18:56:42,967 - INFO - --- Processing Batch 150/5226 ---
+2025-12-20 18:56:45,229 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:47,446 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:47,452 - INFO - --- Finished Batch 150/5226. Progress saved. ---
+2025-12-20 18:56:47,453 - INFO - --- Processing Batch 151/5226 ---
+2025-12-20 18:56:49,842 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:51,973 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:51,979 - INFO - --- Finished Batch 151/5226. Progress saved. ---
+2025-12-20 18:56:51,979 - INFO - --- Processing Batch 152/5226 ---
+2025-12-20 18:56:54,601 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:56:56,865 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:56:56,872 - INFO - --- Finished Batch 152/5226. Progress saved. ---
+2025-12-20 18:56:56,872 - INFO - --- Processing Batch 153/5226 ---
+2025-12-20 18:56:59,319 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:01,625 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:01,630 - INFO - --- Finished Batch 153/5226. Progress saved. ---
+2025-12-20 18:57:01,630 - INFO - --- Processing Batch 154/5226 ---
+2025-12-20 18:57:03,970 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:06,409 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:06,411 - INFO - --- Finished Batch 154/5226. Progress saved. ---
+2025-12-20 18:57:06,411 - INFO - --- Processing Batch 155/5226 ---
+2025-12-20 18:57:09,118 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:11,538 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:11,542 - INFO - --- Finished Batch 155/5226. Progress saved. ---
+2025-12-20 18:57:11,542 - INFO - --- Processing Batch 156/5226 ---
+2025-12-20 18:57:14,098 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:16,147 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:16,153 - INFO - --- Finished Batch 156/5226. Progress saved. ---
+2025-12-20 18:57:16,153 - INFO - --- Processing Batch 157/5226 ---
+2025-12-20 18:57:18,694 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:20,929 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:20,932 - INFO - --- Finished Batch 157/5226. Progress saved. ---
+2025-12-20 18:57:20,933 - INFO - --- Processing Batch 158/5226 ---
+2025-12-20 18:57:24,513 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:28,011 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:28,015 - INFO - --- Finished Batch 158/5226. Progress saved. ---
+2025-12-20 18:57:28,016 - INFO - --- Processing Batch 159/5226 ---
+2025-12-20 18:57:30,731 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:32,729 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:32,735 - INFO - --- Finished Batch 159/5226. Progress saved. ---
+2025-12-20 18:57:32,735 - INFO - --- Processing Batch 160/5226 ---
+2025-12-20 18:57:35,577 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:37,567 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:37,573 - INFO - --- Finished Batch 160/5226. Progress saved. ---
+2025-12-20 18:57:37,573 - INFO - --- Processing Batch 161/5226 ---
+2025-12-20 18:57:39,985 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:42,100 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:42,104 - INFO - --- Finished Batch 161/5226. Progress saved. ---
+2025-12-20 18:57:42,104 - INFO - --- Processing Batch 162/5226 ---
+2025-12-20 18:57:44,924 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:48,294 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:48,298 - INFO - --- Finished Batch 162/5226. Progress saved. ---
+2025-12-20 18:57:48,298 - INFO - --- Processing Batch 163/5226 ---
+2025-12-20 18:57:51,084 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:54,812 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:54,816 - INFO - --- Finished Batch 163/5226. Progress saved. ---
+2025-12-20 18:57:54,816 - INFO - --- Processing Batch 164/5226 ---
+2025-12-20 18:57:57,146 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:57:59,327 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:57:59,331 - INFO - --- Finished Batch 164/5226. Progress saved. ---
+2025-12-20 18:57:59,332 - INFO - --- Processing Batch 165/5226 ---
+2025-12-20 18:58:01,692 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:58:03,767 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:58:03,771 - INFO - --- Finished Batch 165/5226. Progress saved. ---
+2025-12-20 18:58:03,771 - INFO - --- Processing Batch 166/5226 ---
+2025-12-20 18:58:05,165 - ERROR - API Error 404 for movie TMDB ID 332864
+2025-12-20 18:58:06,070 - INFO - Fetched details for 24/25 movies in this batch.
+2025-12-20 18:58:08,147 - INFO - Successfully saved related data for a batch of 24 movies.
+2025-12-20 18:58:08,152 - INFO - --- Finished Batch 166/5226. Progress saved. ---
+2025-12-20 18:58:08,152 - INFO - --- Processing Batch 167/5226 ---
+2025-12-20 18:58:10,658 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:58:12,947 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:58:12,952 - INFO - --- Finished Batch 167/5226. Progress saved. ---
+2025-12-20 18:58:12,952 - INFO - --- Processing Batch 168/5226 ---
+2025-12-20 18:58:15,684 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:58:18,730 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:58:18,737 - INFO - --- Finished Batch 168/5226. Progress saved. ---
+2025-12-20 18:58:18,737 - INFO - --- Processing Batch 169/5226 ---
+2025-12-20 18:58:21,272 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:58:24,568 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:58:24,576 - INFO - --- Finished Batch 169/5226. Progress saved. ---
+2025-12-20 18:58:24,576 - INFO - --- Processing Batch 170/5226 ---
+2025-12-20 18:58:27,222 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:58:29,322 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:58:29,327 - INFO - --- Finished Batch 170/5226. Progress saved. ---
+2025-12-20 18:58:29,328 - INFO - --- Processing Batch 171/5226 ---
+2025-12-20 18:58:32,021 - INFO - Fetched details for 25/25 movies in this batch.
+2025-12-20 18:58:34,155 - INFO - Successfully saved related data for a batch of 25 movies.
+2025-12-20 18:58:34,160 - INFO - --- Finished Batch 171/5226. Progress saved. ---
+2025-12-20 18:58:34,160 - INFO - --- Processing Batch 172/5226 ---
