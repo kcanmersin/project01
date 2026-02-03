@@ -1,5 +1,6 @@
 using CineSocial.Domain.Entities.Movie;
 using CineSocial.Domain.Entities.Media;
+using CineSocial.Domain.Entities.Social;
 using CineSocial.Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,14 @@ public interface IApplicationDbContext
 
     // Media entities
     DbSet<StoredImage> StoredImages { get; }
+
+    // Social entities
+    DbSet<MovieRating> MovieRatings { get; }
+    DbSet<MovieList> MovieLists { get; }
+    DbSet<MovieListItem> MovieListItems { get; }
+    DbSet<Comment> Comments { get; }
+    DbSet<CommentReaction> CommentReactions { get; }
+    DbSet<ListFavorite> ListFavorites { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

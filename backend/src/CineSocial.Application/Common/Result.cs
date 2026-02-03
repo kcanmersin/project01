@@ -32,6 +32,9 @@ public class Result<T>
 
     public static Result<T> ServerError(string error = "An unexpected error occurred") 
         => new(false, default, error, 500);
+
+    public static Result<T> Forbidden(string error = "Access forbidden") 
+        => new(false, default, error, 403);
 }
 
 // Non-generic Result for operations that don't return data
@@ -62,4 +65,7 @@ public class Result
 
     public static Result BadRequest(string error) 
         => new(false, error, 400);
+
+    public static Result Forbidden(string error = "Access forbidden") 
+        => new(false, error, 403);
 }

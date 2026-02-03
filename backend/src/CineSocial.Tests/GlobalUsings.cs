@@ -1,0 +1,9 @@
+global using Xunit;
+global using Moq;
+global using FluentAssertions;
+global using CineSocial.Application.Common;
+global using CineSocial.Domain.Entities.User;
+global using CineSocial.Domain.Entities.Movie;
+global using CineSocial.Domain.Entities.Social;
+global using CineSocial.Domain.Entities.Media;
+global using CineSocial.Domain.Enums;
