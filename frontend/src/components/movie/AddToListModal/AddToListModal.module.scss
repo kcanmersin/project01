@@ -1,0 +1,263 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $spacing-4;
+}
+
+.modal {
+  background: $dark-800;
+  border-radius: $radius-xl;
+  width: 100%;
+  max-width: 400px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-4 $spacing-5;
+  border-bottom: 1px solid $dark-600;
+
+  h2 {
+    margin: 0;
+    font-size: $font-lg;
+    font-weight: 600;
+    color: $light-100;
+  }
+}
+
+.closeBtn {
+  padding: $spacing-2;
+  background: none;
+  border: none;
+  color: $light-400;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $light-100;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.content {
+  padding: $spacing-4;
+  overflow-y: auto;
+}
+
+.lists {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  margin-bottom: $spacing-4;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  padding: $spacing-3 $spacing-4;
+  background: $dark-700;
+  border: 1px solid transparent;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+
+  &:hover {
+    background: $dark-600;
+  }
+
+  &.active {
+    border-color: $electric-violet;
+    background: rgba($electric-violet, 0.1);
+  }
+}
+
+.listIcon {
+  width: 24px;
+  height: 24px;
+  color: $light-400;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .active & {
+    color: $electric-violet;
+  }
+}
+
+.listInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.listTitle {
+  font-weight: 500;
+  color: $light-100;
+}
+
+.listCount {
+  font-size: $font-sm;
+  color: $light-500;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: $radius-md;
+  border: 2px solid $dark-500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .active & {
+    background: $electric-violet;
+    border-color: $electric-violet;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    color: white;
+  }
+}
+
+.createBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  width: 100%;
+  padding: $spacing-3;
+  background: none;
+  border: 2px dashed $dark-500;
+  border-radius: $radius-lg;
+  color: $light-300;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $electric-violet;
+    color: $electric-violet;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.createForm {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  background: $dark-700;
+  border-radius: $radius-lg;
+
+  input,
+  textarea {
+    width: 100%;
+    padding: $spacing-3;
+    background: $dark-600;
+    border: 1px solid $dark-500;
+    border-radius: $radius-md;
+    color: $light-100;
+    font-size: $font-sm;
+
+    &:focus {
+      outline: none;
+      border-color: $electric-violet;
+    }
+
+    &::placeholder {
+      color: $light-500;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+}
+
+.publicToggle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: $electric-violet;
+  }
+
+  span {
+    font-size: $font-sm;
+    color: $light-300;
+  }
+}
+
+.formActions {
+  display: flex;
+  gap: $spacing-2;
+  margin-top: $spacing-2;
+
+  button {
+    flex: 1;
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:first-child {
+      background: none;
+      border: 1px solid $dark-500;
+      color: $light-300;
+
+      &:hover {
+        border-color: $light-400;
+      }
+    }
+
+    &:last-child {
+      background: $electric-violet;
+      border: none;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background: darken($electric-violet, 10%);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

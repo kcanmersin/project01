@@ -319,3 +319,342 @@ export const moviesApi = {
     });
   },
 };
+
+// ============= RATING TYPES =============
+
+export interface Rating {
+  id: string;
+  userId: string;
+  username: string;
+  movieId: string;
+  rating: number;
+  review: string | null;
+  createdAt: string;
+  updatedAt: string | null;
+}
+
+export interface UserRating {
+  movieId: string;
+  rating: number;
+  review: string | null;
+  createdAt: string;
+}
+
+export interface MovieRatingStats {
+  movieId: string;
+  averageRating: number;
+  totalRatings: number;
+  ratingDistribution: number[];
+}
+
+// ============= LIST TYPES =============
+
+export interface MovieList {
+  id: string;
+  userId: string;
+  username: string;
+  title: string;
+  description: string | null;
+  coverImageId: string | null;
+  listType: 'Watchlist' | 'Favorites' | 'Custom';
+  isPublic: boolean;
+  movieCount: number;
+  favoriteCount: number;
+  isFavoritedByCurrentUser: boolean;
+  createdAt: string;
+  updatedAt: string | null;
+}
+
+export interface MovieListItem {
+  id: string;
+  movieId: string;
+  movieTitle: string;
+  moviePosterPath: string | null;
+  movieVoteAverage: number | null;
+  movieReleaseDate: string | null;
+  order: number;
+  note: string | null;
+  addedAt: string;
+}
+
+export interface MovieListDetail extends MovieList {
+  isOwner: boolean;
+  items: MovieListItem[];
+}
+
+export interface SimpleList {
+  id: string;
+  title: string;
+  listType: string;
+  movieCount: number;
+  containsMovie: boolean;
+}
+
+// ============= COMMENT TYPES =============
+
+export interface Comment {
+  id: string;
+  userId: string;
+  username: string;
+  userProfileImageId: string | null;
+  targetType: string;
+  targetId: string;
+  parentCommentId: string | null;
+  content: string;
+  upvoteCount: number;
+  downvoteCount: number;
+  replyCount: number;
+  currentUserVote: 'Upvote' | 'Downvote' | null;
+  createdAt: string;
+  updatedAt: string | null;
+  replies: Comment[] | null;
+}
+
+export interface CommentVoteResult {
+  upvoteCount: number;
+  downvoteCount: number;
+  currentUserVote: string | null;
+}
+
+// ============= RATINGS API =============
+
+export const ratingsApi = {
+  async rateMovie(movieId: string, rating: number, review?: string): Promise<Rating> {
+    const response = await fetch(`${API_BASE_URL}/api/ratings`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ movieId, rating, review }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to rate movie');
+    }
+
+    return response.json();
+  },
+
+  async deleteRating(movieId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/api/ratings/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete rating');
+    }
+  },
+
+  async getMyRating(movieId: string): Promise<UserRating | null> {
+    const response = await fetch(`${API_BASE_URL}/api/ratings/movies/${movieId}/my-rating`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) return null;
+      throw new Error('Failed to fetch rating');
+    }
+
+    return response.json();
+  },
+
+  async getMovieRatings(movieId: string, page: number = 1, pageSize: number = 20): Promise<PagedResult<Rating>> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/ratings/movies/${movieId}?page=${page}&pageSize=${pageSize}`,
+      { headers: getAuthHeaders() }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch ratings');
+    }
+
+    return response.json();
+  },
+
+  async getMovieRatingStats(movieId: string): Promise<MovieRatingStats> {
+    const response = await fetch(`${API_BASE_URL}/api/ratings/movies/${movieId}/stats`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch rating stats');
+    }
+
+    return response.json();
+  },
+};
+
+// ============= LISTS API =============
+
+export const listsApi = {
+  async getMyLists(): Promise<MovieList[]> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/my-lists`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch lists');
+    }
+
+    return response.json();
+  },
+
+  async getMyListsForMovie(movieId: string): Promise<SimpleList[]> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/my-lists/for-movie/${movieId}`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch lists');
+    }
+
+    return response.json();
+  },
+
+  async getListById(listId: string): Promise<MovieListDetail> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/${listId}`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch list');
+    }
+
+    return response.json();
+  },
+
+  async createList(title: string, description?: string, isPublic: boolean = false): Promise<MovieList> {
+    const response = await fetch(`${API_BASE_URL}/api/lists`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ title, description, isPublic }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create list');
+    }
+
+    return response.json();
+  },
+
+  async updateList(listId: string, title: string, description?: string, isPublic: boolean = false): Promise<MovieList> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/${listId}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ title, description, isPublic }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update list');
+    }
+
+    return response.json();
+  },
+
+  async deleteList(listId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/${listId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete list');
+    }
+  },
+
+  async addMovieToList(listId: string, movieId: string, note?: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/${listId}/movies`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ movieId, note }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add movie to list');
+    }
+  },
+
+  async removeMovieFromList(listId: string, movieId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/${listId}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to remove movie from list');
+    }
+  },
+
+  async toggleListFavorite(listId: string): Promise<boolean> {
+    const response = await fetch(`${API_BASE_URL}/api/lists/${listId}/favorite`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to toggle favorite');
+    }
+
+    return response.json();
+  },
+};
+
+// ============= COMMENTS API =============
+
+export const commentsApi = {
+  async getMovieComments(movieId: string, page: number = 1, pageSize: number = 20): Promise<PagedResult<Comment>> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/comments/movies/${movieId}?page=${page}&pageSize=${pageSize}`,
+      { headers: getAuthHeaders() }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch comments');
+    }
+
+    return response.json();
+  },
+
+  async createComment(
+    targetId: string,
+    targetType: number, // 1 = Movie
+    content: string,
+    parentCommentId?: string
+  ): Promise<Comment> {
+    const response = await fetch(`${API_BASE_URL}/api/comments`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ targetId, targetType, content, parentCommentId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create comment');
+    }
+
+    return response.json();
+  },
+
+  async deleteComment(commentId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete comment');
+    }
+  },
+
+  async voteComment(commentId: string, voteType: 'Upvote' | 'Downvote' | null): Promise<CommentVoteResult> {
+    const response = await fetch(`${API_BASE_URL}/api/comments/${commentId}/vote`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ voteType: voteType === null ? null : voteType === 'Upvote' ? 0 : 1 }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to vote on comment');
+    }
+
+    return response.json();
+  },
+};
