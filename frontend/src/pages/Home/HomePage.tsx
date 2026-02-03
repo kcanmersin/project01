@@ -1,11 +1,32 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { tokenStorage } from '../../services/api';
-import { tmdbApi, type Movie, type Genre } from '../../services/tmdb';
+import { tokenStorage, moviesApi, type Movie, type Genre } from '../../services/api';
 import { Header } from '../../components/layout/Header/Header';
 import { HeroSection } from '../../components/movie/HeroSection/HeroSection';
 import { MovieRow } from '../../components/movie/MovieRow/MovieRow';
 import styles from './HomePage.module.scss';
+
+// Hardcoded genres until backend provides /api/genres endpoint
+const GENRES: Genre[] = [
+  { id: 28, name: 'Aksiyon' },
+  { id: 12, name: 'Macera' },
+  { id: 16, name: 'Animasyon' },
+  { id: 35, name: 'Komedi' },
+  { id: 80, name: 'Suç' },
+  { id: 99, name: 'Belgesel' },
+  { id: 18, name: 'Dram' },
+  { id: 10751, name: 'Aile' },
+  { id: 14, name: 'Fantastik' },
+  { id: 36, name: 'Tarih' },
+  { id: 27, name: 'Korku' },
+  { id: 10402, name: 'Müzik' },
+  { id: 9648, name: 'Gizem' },
+  { id: 10749, name: 'Romantik' },
+  { id: 878, name: 'Bilim Kurgu' },
+  { id: 53, name: 'Gerilim' },
+  { id: 10752, name: 'Savaş' },
+  { id: 37, name: 'Western' },
+];
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -17,7 +38,7 @@ export const HomePage = () => {
   const [topRated, setTopRated] = useState<Movie[]>([]);
   const [upcoming, setUpcoming] = useState<Movie[]>([]);
   const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
+  const [genres] = useState<Genre[]>(GENRES);
 
   useEffect(() => {
     if (!user) {
@@ -33,22 +54,19 @@ export const HomePage = () => {
           topRatedData,
           upcomingData,
           nowPlayingData,
-          genresData
         ] = await Promise.all([
-          tmdbApi.getTrending('week'),
-          tmdbApi.getPopular(),
-          tmdbApi.getTopRated(),
-          tmdbApi.getUpcoming(),
-          tmdbApi.getNowPlaying(),
-          tmdbApi.getGenres()
+          moviesApi.getTrending(1, 20),
+          moviesApi.getPopular(1, 20),
+          moviesApi.getTopRated(1, 20),
+          moviesApi.getUpcoming(1, 20),
+          moviesApi.getNowPlaying(1, 20),
         ]);
 
-        setTrending(trendingData);
-        setPopular(popularData.results);
-        setTopRated(topRatedData.results);
-        setUpcoming(upcomingData.results);
-        setNowPlaying(nowPlayingData.results);
-        setGenres(genresData);
+        setTrending(trendingData.items);
+        setPopular(popularData.items);
+        setTopRated(topRatedData.items);
+        setUpcoming(upcomingData.items);
+        setNowPlaying(nowPlayingData.items);
       } catch (error) {
         console.error('Error fetching movies:', error);
       } finally {

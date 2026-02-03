@@ -1,0 +1,412 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.page {
+  min-height: 100vh;
+  background: $dark-900;
+}
+
+.backdrop {
+  position: relative;
+  height: 60vh;
+  min-height: 400px;
+  max-height: 600px;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba($dark-900, 0.3) 0%,
+      rgba($dark-900, 0.7) 50%,
+      $dark-900 100%
+    );
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.content {
+  position: relative;
+  margin-top: -200px;
+  z-index: 1;
+  padding: 0 $spacing-6;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mainInfo {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: $spacing-8;
+  margin-bottom: $spacing-8;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $spacing-4;
+  }
+}
+
+.poster {
+  position: relative;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  aspect-ratio: 2/3;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @include mobile {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.title {
+  font-size: $font-4xl;
+  font-weight: 700;
+  color: $light-100;
+  margin: 0;
+
+  @include mobile {
+    font-size: $font-2xl;
+    text-align: center;
+  }
+}
+
+.tagline {
+  font-size: $font-lg;
+  font-style: italic;
+  color: $light-400;
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+  color: $light-300;
+  font-size: $font-sm;
+
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+  color: $cinema-gold;
+  font-weight: 600;
+
+  .star {
+    color: $cinema-gold;
+  }
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.genre {
+  padding: $spacing-1 $spacing-3;
+  background: rgba($electric-violet, 0.2);
+  border: 1px solid rgba($electric-violet, 0.3);
+  border-radius: $radius-full;
+  color: $electric-violet-light;
+  font-size: $font-sm;
+}
+
+.overview {
+  color: $light-200;
+  font-size: $font-base;
+  line-height: 1.7;
+  max-width: 800px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-3;
+  margin-top: $spacing-4;
+
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3 $spacing-5;
+  border-radius: $radius-lg;
+  font-weight: 600;
+  font-size: $font-sm;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.primary {
+    background: $cinema-gold;
+    color: $dark-900;
+
+    &:hover {
+      background: darken($cinema-gold, 10%);
+    }
+  }
+
+  &.secondary {
+    background: rgba($light-100, 0.1);
+    color: $light-100;
+    border: 1px solid rgba($light-100, 0.2);
+
+    &:hover {
+      background: rgba($light-100, 0.2);
+    }
+
+    &.active {
+      background: rgba($electric-violet, 0.2);
+      border-color: $electric-violet;
+      color: $electric-violet-light;
+    }
+  }
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-10;
+  padding-bottom: $spacing-10;
+}
+
+.section {
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    font-size: $font-xl;
+    font-weight: 600;
+    color: $light-100;
+    margin-bottom: $spacing-6;
+
+    &::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: $cinema-gold;
+      border-radius: $radius-sm;
+    }
+  }
+}
+
+.cast {
+  display: flex;
+  gap: $spacing-4;
+  overflow-x: auto;
+  padding-bottom: $spacing-4;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $dark-800;
+    border-radius: $radius-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $dark-600;
+    border-radius: $radius-full;
+  }
+}
+
+.castCard {
+  flex-shrink: 0;
+  width: 140px;
+  text-align: center;
+}
+
+.castImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto $spacing-2;
+  background: $dark-700;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-2xl;
+    color: $light-500;
+  }
+}
+
+.castName {
+  font-weight: 600;
+  color: $light-100;
+  font-size: $font-sm;
+  margin-bottom: $spacing-1;
+}
+
+.castCharacter {
+  font-size: $font-xs;
+  color: $light-400;
+}
+
+// Rating Section
+.ratingSection {
+  background: $dark-800;
+  border-radius: $radius-lg;
+  padding: $spacing-6;
+}
+
+.ratingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-4;
+
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+}
+
+.avgRating {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+}
+
+.avgRatingValue {
+  font-size: $font-4xl;
+  font-weight: 700;
+  color: $cinema-gold;
+}
+
+.avgRatingInfo {
+  display: flex;
+  flex-direction: column;
+
+  .stars {
+    color: $cinema-gold;
+  }
+
+  .count {
+    font-size: $font-sm;
+    color: $light-400;
+  }
+}
+
+.userRating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: $spacing-2;
+
+  @include mobile {
+    align-items: center;
+  }
+}
+
+.userRatingLabel {
+  font-size: $font-sm;
+  color: $light-400;
+}
+
+.ratingStars {
+  display: flex;
+  gap: $spacing-1;
+}
+
+.ratingStar {
+  font-size: $font-2xl;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: $dark-500;
+
+  &:hover,
+  &.active {
+    color: $cinema-gold;
+    transform: scale(1.1);
+  }
+
+  &.filled {
+    color: $cinema-gold;
+  }
+}
+
+// Loading
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: $light-300;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid $dark-600;
+  border-top-color: $cinema-gold;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

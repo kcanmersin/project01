@@ -1,6 +1,7 @@
 using CineSocial.Application.Interfaces;
 using CineSocial.Domain.Entities.Media;
 using CineSocial.Domain.Entities.Movie;
+using CineSocial.Domain.Entities.Social;
 using CineSocial.Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +40,14 @@ public class CineSocialDbContext : DbContext, IApplicationDbContext
     public DbSet<MovieVideo> MovieVideos { get; set; }
     public DbSet<Person> People { get; set; }
     public DbSet<ProductionCompany> ProductionCompanies { get; set; }
+
+    // Social Entities
+    public DbSet<MovieRating> MovieRatings { get; set; }
+    public DbSet<MovieList> MovieLists { get; set; }
+    public DbSet<MovieListItem> MovieListItems { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<CommentReaction> CommentReactions { get; set; }
+    public DbSet<ListFavorite> ListFavorites { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
