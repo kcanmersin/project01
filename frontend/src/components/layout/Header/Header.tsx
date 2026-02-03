@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { tokenStorage } from '../../../services/api';
-import { tmdbApi, type Movie, getImageUrl } from '../../../services/tmdb';
+import { tokenStorage, moviesApi, type Movie } from '../../../services/api';
+import { getImageUrl } from '../../../services/tmdb';
 import styles from './Header.module.scss';
 
 export const Header = () => {
@@ -47,8 +47,8 @@ export const Header = () => {
       }
 
       try {
-        const response = await tmdbApi.searchMovies(searchQuery);
-        setSearchResults(response.results.slice(0, 6));
+        const response = await moviesApi.searchMovies(searchQuery, 1, 6);
+        setSearchResults(response.items);
       } catch (error) {
         console.error('Search error:', error);
       }
@@ -142,8 +142,8 @@ export const Header = () => {
                         }}
                       >
                         <div className={styles.searchResultPoster}>
-                          {movie.poster_path ? (
-                            <img src={getImageUrl(movie.poster_path, 'w200') || ''} alt={movie.title} />
+                          {movie.posterPath ? (
+                            <img src={getImageUrl(movie.posterPath, 'w185') || ''} alt={movie.title} />
                           ) : (
                             <div className={styles.noPoster}>🎬</div>
                           )}
@@ -151,11 +151,11 @@ export const Header = () => {
                         <div className={styles.searchResultInfo}>
                           <span className={styles.searchResultTitle}>{movie.title}</span>
                           <span className={styles.searchResultYear}>
-                            {movie.release_date?.split('-')[0] || 'N/A'}
+                            {movie.releaseDate?.split('T')[0]?.split('-')[0] || 'N/A'}
                           </span>
                         </div>
                         <div className={styles.searchResultRating}>
-                          <span>★</span> {movie.vote_average.toFixed(1)}
+                          <span>★</span> {(movie.voteAverage ?? 0).toFixed(1)}
                         </div>
                       </Link>
                     ))}

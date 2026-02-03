@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { type Movie } from '../../../services/tmdb';
+import { type Movie } from '../../../services/api';
 import { MovieCard } from '../MovieCard/MovieCard';
 import styles from './MovieRow.module.scss';
 
