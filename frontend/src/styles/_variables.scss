@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // CineFeel - Cinematic Dark Theme
 // Inspired by classic cinema, film noir, and art deco elegance
 
@@ -7,12 +9,29 @@ $color-bg-darker: #050507; // Pure black
 $color-bg-card: #12121a; // Card surfaces
 $color-bg-elevated: #1a1a24; // Elevated surfaces
 
+// Dark Shade Palette (for component styling)
+$dark-900: #0a0a0f;
+$dark-800: #12121a;
+$dark-700: #1a1a24;
+$dark-600: #252530;
+$dark-500: #32323f;
+
+// Light Shade Palette (for text/icons)
+$light-100: #fafaf9;
+$light-200: #e5e5e5;
+$light-300: #d4d4d4;
+$light-400: #a3a3a3;
+$light-500: #737373;
+
 // Accent Colors - Golden Cinema & Electric Violet
 $color-primary: #c9a227; // Cinema gold
 $color-primary-dim: rgba(201, 162, 39, 0.15);
 $color-accent: #8b5cf6; // Electric violet
 $color-accent-dim: rgba(139, 92, 246, 0.15);
 $color-highlight: #e4d5a7; // Warm highlight
+$electric-violet: #8b5cf6; // Alias for component usage
+$electric-violet-light: #a78bfa; // Lighter violet
+$cinema-gold: #c9a227; // Alias for primary
 
 // Semantic Colors
 $color-success: #22c55e;
@@ -49,6 +68,17 @@ $text-4xl: 2.25rem;
 $text-5xl: 3rem;
 $text-6xl: 3.75rem;
 $text-7xl: 4.5rem;
+
+// Font Size Aliases (for component usage)
+$font-xs: $text-xs;
+$font-sm: $text-sm;
+$font-base: $text-base;
+$font-lg: $text-lg;
+$font-xl: $text-xl;
+$font-2xl: $text-2xl;
+$font-3xl: $text-3xl;
+$font-4xl: $text-4xl;
+$font-5xl: $text-5xl;
 
 // Font Weights
 $font-light: 300;
@@ -126,7 +156,7 @@ $container-max-width: 1400px;
 $card-width-sm: 140px;
 $card-width-md: 180px;
 $card-width-lg: 220px;
-$card-aspect-ratio: 3 / 4.5;
+$card-aspect-ratio: math.div(3, 4.5);
 
 // Header Height
 $header-height: 72px;

@@ -37,7 +37,7 @@ public class LoginQueryValidatorTests
         var result = _validator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.EmailOrUsername);
+        result.ShouldHaveValidationErrorFor(x => x.EmailOrUsername)
             .WithErrorMessage("Email is required");
     }
 
@@ -53,7 +53,7 @@ public class LoginQueryValidatorTests
         var result = _validator.TestValidate(query);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.EmailOrUsername);
+        result.ShouldHaveValidationErrorFor(x => x.EmailOrUsername)
             .WithErrorMessage("Invalid email format");
     }
 

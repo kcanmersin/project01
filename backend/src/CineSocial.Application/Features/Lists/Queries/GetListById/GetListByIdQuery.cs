@@ -52,7 +52,7 @@ public class GetListByIdQueryHandler : IRequestHandler<GetListByIdQuery, Result<
                     i.MovieId,
                     m.Title,
                     m.PosterPath,
-                    m.VoteAverage,
+                    m.VoteAverage.HasValue ? (decimal?)m.VoteAverage.Value : null,
                     m.ReleaseDate.HasValue ? m.ReleaseDate.Value.ToString("yyyy-MM-dd") : null,
                     i.Order,
                     i.Note,

@@ -1,4 +1,8 @@
 using CineSocial.Application.Interfaces;
+using CineSocial.Domain.Entities.Media;
+using CineSocial.Domain.Entities.Movie;
+using CineSocial.Domain.Entities.Social;
+using CineSocial.Domain.Entities.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace CineSocial.Tests.Helpers;
@@ -27,6 +31,8 @@ public class TestDbContext : DbContext, IApplicationDbContext
     public TestDbContext(DbContextOptions<DbContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<UserExternalLogin> UserExternalLogins { get; set; } = null!;
+    public DbSet<EmailVerificationToken> EmailVerificationTokens { get; set; } = null!;
     public DbSet<MovieEntity> Movies { get; set; } = null!;
     public DbSet<Genre> Genres { get; set; } = null!;
     public DbSet<MovieGenre> MovieGenres { get; set; } = null!;

@@ -68,7 +68,7 @@ public class ResultTests
     }
 
     [Fact]
-    public void NotFound_ShouldCreateNotFoundResultWithDefault Message()
+    public void NotFound_ShouldCreateNotFoundResultWithDefaultMessage()
     {
         // Act
         var result = Result<string>.NotFound();

@@ -24,7 +24,7 @@ public class PagedResultTests
     }
 
     [Fact]
-    public void TotalPages_ShouldCalculateCorrectly_WhenItemsAreEvenly Divisible()
+    public void TotalPages_ShouldCalculateCorrectly_WhenItemsAreEvenlyDivisible()
     {
         // Arrange & Act
         var result = PagedResult<int>.Create(new List<int>(), 20, 1, 5);

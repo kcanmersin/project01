@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { type Movie, getImageUrl } from '../../../services/tmdb';
+import { type Movie } from '../../../services/api';
+import { getImageUrl } from '../../../services/tmdb';
 import styles from './MovieCard.module.scss';
 
 interface MovieCardProps {
@@ -14,9 +15,9 @@ export const MovieCard = ({ movie, index = 0, size = 'md', showRank = false }: M
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const posterUrl = getImageUrl(movie.poster_path, size === 'lg' ? 'w500' : 'w300');
-  const year = movie.release_date?.split('-')[0] || '';
-  const rating = movie.vote_average.toFixed(1);
+  const posterUrl = getImageUrl(movie.posterPath, size === 'lg' ? 'w500' : 'w342');
+  const year = movie.releaseDate?.split('T')[0]?.split('-')[0] || '';
+  const rating = (movie.voteAverage ?? 0).toFixed(1);
 
   return (
     <Link

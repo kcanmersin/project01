@@ -1,0 +1,248 @@
+@use 'sass:color';
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.commentSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.newCommentForm {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+
+  textarea {
+    width: 100%;
+    padding: $spacing-4;
+    background: $dark-800;
+    border: 1px solid $dark-600;
+    border-radius: $radius-lg;
+    color: $light-100;
+    font-size: $font-base;
+    resize: vertical;
+    min-height: 100px;
+
+    &:focus {
+      outline: none;
+      border-color: $electric-violet;
+    }
+
+    &::placeholder {
+      color: $light-500;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .submitBtn {
+    align-self: flex-end;
+    padding: $spacing-3 $spacing-6;
+    background: $cinema-gold;
+    color: $dark-900;
+    border: none;
+    border-radius: $radius-md;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: color.adjust($cinema-gold, $lightness: -10%);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.noComments {
+  text-align: center;
+  color: $light-400;
+  padding: $spacing-8;
+}
+
+.comment {
+  background: $dark-800;
+  border-radius: $radius-lg;
+  padding: $spacing-4;
+
+  &.reply {
+    background: $dark-700;
+    margin-left: $spacing-8;
+    border-left: 2px solid $electric-violet;
+  }
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  margin-bottom: $spacing-3;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $electric-violet;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.commentInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.username {
+  font-weight: 600;
+  color: $light-100;
+}
+
+.date {
+  font-size: $font-sm;
+  color: $light-500;
+}
+
+.deleteBtn {
+  padding: $spacing-2;
+  background: none;
+  border: none;
+  color: $light-500;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+    color: #ef4444;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.commentContent {
+  color: $light-200;
+  line-height: 1.6;
+  margin-bottom: $spacing-3;
+}
+
+.commentActions {
+  display: flex;
+  gap: $spacing-4;
+}
+
+.voteBtn,
+.replyBtn {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-2;
+  background: none;
+  border: none;
+  color: $light-400;
+  font-size: $font-sm;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: $light-100;
+  }
+
+  &.active {
+    color: $electric-violet;
+  }
+}
+
+.replyForm {
+  margin-top: $spacing-4;
+  padding-top: $spacing-4;
+  border-top: 1px solid $dark-600;
+
+  textarea {
+    width: 100%;
+    padding: $spacing-3;
+    background: $dark-700;
+    border: 1px solid $dark-600;
+    border-radius: $radius-md;
+    color: $light-100;
+    font-size: $font-sm;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: $electric-violet;
+    }
+  }
+}
+
+.replyFormActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-2;
+  margin-top: $spacing-2;
+
+  button {
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    font-size: $font-sm;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:first-child {
+      background: none;
+      border: 1px solid $dark-500;
+      color: $light-300;
+
+      &:hover {
+        border-color: $light-400;
+      }
+    }
+  }
+
+  .submitBtn {
+    background: $electric-violet;
+    border: none;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: color.adjust($electric-violet, $lightness: -10%);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.replies {
+  margin-top: $spacing-4;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+}

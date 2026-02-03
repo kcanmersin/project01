@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { type Movie, getBackdropUrl } from '../../../services/tmdb';
+import { type Movie } from '../../../services/api';
+import { getBackdropUrl } from '../../../services/tmdb';
 import styles from './HeroSection.module.scss';
 
 interface HeroSectionProps {
@@ -48,8 +49,8 @@ export const HeroSection = ({ movies, loading = false }: HeroSectionProps) => {
 
   if (!currentMovie) return null;
 
-  const backdropUrl = getBackdropUrl(currentMovie.backdrop_path, 'original');
-  const year = currentMovie.release_date?.split('-')[0] || '';
+  const backdropUrl = getBackdropUrl(currentMovie.backdropPath, 'original');
+  const year = currentMovie.releaseDate?.split('T')[0]?.split('-')[0] || '';
 
   return (
     <section className={styles.hero}>
@@ -78,13 +79,13 @@ export const HeroSection = ({ movies, loading = false }: HeroSectionProps) => {
           <div className={styles.meta}>
             <span className={styles.rating}>
               <span className={styles.star}>★</span>
-              {currentMovie.vote_average.toFixed(1)}
+              {(currentMovie.voteAverage ?? 0).toFixed(1)}
             </span>
             <span className={styles.separator}>•</span>
             <span className={styles.year}>{year}</span>
             <span className={styles.separator}>•</span>
             <span className={styles.votes}>
-              {currentMovie.vote_count.toLocaleString()} değerlendirme
+              {(currentMovie.voteCount ?? 0).toLocaleString()} değerlendirme
             </span>
           </div>
 
