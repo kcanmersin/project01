@@ -48,6 +48,7 @@ public class CineSocialDbContext : DbContext, IApplicationDbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<CommentReaction> CommentReactions { get; set; }
     public DbSet<ListFavorite> ListFavorites { get; set; }
+    public DbSet<UserFollow> UserFollows { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
