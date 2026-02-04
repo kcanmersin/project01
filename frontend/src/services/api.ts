@@ -839,3 +839,61 @@ export const followsApi = {
     return response.json();
   },
 };
+
+// ============= PERSON TYPES =============
+
+export interface PersonDetail {
+  id: string;
+  tmdbId: number;
+  name: string;
+  biography: string | null;
+  birthday: string | null;
+  deathday: string | null;
+  placeOfBirth: string | null;
+  profilePath: string | null;
+  popularity: number | null;
+  gender: number | null;
+  knownForDepartment: string | null;
+  imdbId: string | null;
+  age: number;
+  moviesAsCast: PersonMovie[];
+  moviesAsCrew: PersonCrewMovie[];
+}
+
+export interface PersonMovie {
+  movieId: string;
+  tmdbId: number;
+  title: string;
+  posterPath: string | null;
+  releaseDate: string | null;
+  voteAverage: number | null;
+  character: string | null;
+  castOrder: number | null;
+}
+
+export interface PersonCrewMovie {
+  movieId: string;
+  tmdbId: number;
+  title: string;
+  posterPath: string | null;
+  releaseDate: string | null;
+  voteAverage: number | null;
+  job: string | null;
+  department: string | null;
+}
+
+// ============= PEOPLE API =============
+
+export const peopleApi = {
+  async getPersonDetail(personId: string): Promise<PersonDetail> {
+    const response = await fetch(`${API_BASE_URL}/api/people/${personId}`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch person details');
+    }
+
+    return response.json();
+  },
+};

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   moviesApi,
   ratingsApi,
@@ -279,7 +279,11 @@ export const MovieDetailPage = () => {
               <h2>Oyuncular</h2>
               <div className={styles.cast}>
                 {movie.cast.slice(0, 10).map(member => (
-                  <div key={member.personId} className={styles.castCard}>
+                  <Link
+                    key={member.personId}
+                    to={`/person/${member.personId}`}
+                    className={styles.castCard}
+                  >
                     <div className={styles.castImage}>
                       {member.profilePath ? (
                         <img src={getProfileUrl(member.profilePath) || ''} alt={member.name} />
@@ -289,7 +293,7 @@ export const MovieDetailPage = () => {
                     </div>
                     <div className={styles.castName}>{member.name}</div>
                     <div className={styles.castCharacter}>{member.character}</div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>
