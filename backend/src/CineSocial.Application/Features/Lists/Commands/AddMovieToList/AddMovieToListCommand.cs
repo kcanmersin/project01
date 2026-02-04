@@ -77,8 +77,22 @@ public class AddMovieToListCommandHandler : IRequestHandler<AddMovieToListComman
         list.MovieCount++;
         list.UpdatedAt = DateTime.UtcNow;
 
-        await _context.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+            return Result<bool>.Success(true);
+        }
+        catch (DbUpdateException)
+        {
+            var existsAfterError = await _context.MovieListItems
+                .AnyAsync(i => i.MovieListId == request.ListId && i.MovieId == request.MovieId, cancellationToken);
 
-        return Result<bool>.Success(true);
+            if (existsAfterError)
+            {
+                return Result<bool>.BadRequest("Movie is already in this list");
+            }
+
+            throw;
+        }
     }
 }

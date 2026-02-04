@@ -22,56 +22,74 @@ public class GetUserActivityQueryHandler : IRequestHandler<GetUserActivityQuery,
 
     public async Task<Result<PagedResult<UserActivityDto>>> Handle(GetUserActivityQuery request, CancellationToken cancellationToken)
     {
-        // Get ratings
-        var ratings = await _context.MovieRatings
+        var skip = (request.PageNumber - 1) * request.PageSize;
+        var pageSize = request.PageSize;
+
+        // Get total count for pagination
+        var ratingsCountTask = _context.MovieRatings
+            .AsNoTracking()
+            .CountAsync(r => r.UserId == request.UserId && !r.IsDeleted, cancellationToken);
+
+        var commentsCountTask = _context.Comments
+            .AsNoTracking()
+            .CountAsync(c => c.UserId == request.UserId && !c.IsDeleted && c.TargetType == Domain.Enums.CommentTargetType.Movie, cancellationToken);
+
+        var ratingsCount = await ratingsCountTask;
+        var commentsCount = await commentsCountTask;
+        var totalCount = ratingsCount + commentsCount;
+
+        // Use database-level UNION and pagination by combining both queries
+        // Get ratings as user activity
+        var ratingsQuery = _context.MovieRatings
             .AsNoTracking()
             .Where(r => r.UserId == request.UserId && !r.IsDeleted)
-            .OrderByDescending(r => r.CreatedAt)
-            .Take(50)
-            .Select(r => new UserActivityDto(
-                "rating",
-                r.MovieId,
-                r.Movie.Title,
-                r.Movie.PosterPath,
-                r.Rating,
-                r.Review,
-                r.CreatedAt
-            ))
-            .ToListAsync(cancellationToken);
+            .Select(r => new
+            {
+                Type = "rating",
+                TargetId = r.MovieId,
+                TargetTitle = r.Movie.Title,
+                TargetPosterPath = r.Movie.PosterPath,
+                Rating = (decimal?)r.Rating,
+                Content = r.Review,
+                CreatedAt = r.CreatedAt
+            });
 
-        // Get comments
-        var comments = await _context.Comments
+        // Get comments for movies
+        var commentsQuery = _context.Comments
             .AsNoTracking()
             .Where(c => c.UserId == request.UserId && !c.IsDeleted && c.TargetType == Domain.Enums.CommentTargetType.Movie)
-            .OrderByDescending(c => c.CreatedAt)
-            .Take(50)
             .Join(
                 _context.Movies,
                 c => c.TargetId,
                 m => m.Id,
-                (c, m) => new UserActivityDto(
-                    "comment",
-                    m.Id,
-                    m.Title,
-                    m.PosterPath,
-                    null,
-                    c.Content.Length > 100 ? c.Content.Substring(0, 100) + "..." : c.Content,
-                    c.CreatedAt
-                )
-            )
-            .ToListAsync(cancellationToken);
+                (c, m) => new
+                {
+                    Type = "comment",
+                    TargetId = m.Id,
+                    TargetTitle = m.Title,
+                    TargetPosterPath = m.PosterPath,
+                    Rating = (decimal?)null,
+                    Content = c.Content.Length > 100 ? c.Content.Substring(0, 100) + "..." : c.Content,
+                    CreatedAt = c.CreatedAt
+                }
+            );
 
-        // Combine and sort
-        var allActivities = ratings
-            .Concat(comments)
+        // Union both queries, order by date, and apply database-level pagination
+        var pagedActivities = await ratingsQuery
+            .Union(commentsQuery)
             .OrderByDescending(a => a.CreatedAt)
-            .ToList();
-
-        var totalCount = allActivities.Count;
-        var pagedActivities = allActivities
-            .Skip((request.PageNumber - 1) * request.PageSize)
-            .Take(request.PageSize)
-            .ToList();
+            .Skip(skip)
+            .Take(pageSize)
+            .Select(a => new UserActivityDto(
+                a.Type,
+                a.TargetId,
+                a.TargetTitle,
+                a.TargetPosterPath,
+                a.Rating,
+                a.Content,
+                a.CreatedAt
+            ))
+            .ToListAsync(cancellationToken);
 
         return Result<PagedResult<UserActivityDto>>.Success(
             new PagedResult<UserActivityDto>(pagedActivities, totalCount, request.PageNumber, request.PageSize)

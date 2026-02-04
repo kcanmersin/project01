@@ -53,58 +53,69 @@ public class GetUserStatsQueryHandler : IRequestHandler<GetUserStatsQuery, Resul
         if (!userExists)
             return Result<UserStatsDto>.NotFound("User not found");
 
-        // Get all user ratings with movie data
-        var userRatings = await _context.MovieRatings
+        // Get aggregated rating stats from database (avoid loading all ratings into memory)
+        var ratingStats = await _context.MovieRatings
             .AsNoTracking()
             .Where(r => r.UserId == request.UserId && !r.IsDeleted)
-            .Include(r => r.Movie)
+            .GroupBy(r => 1) // Group all into one
+            .Select(g => new
+            {
+                TotalMovies = g.Count(),
+                TotalWatchTime = g.Sum(r => r.Movie.Runtime ?? 0),
+                AverageRating = g.Average(r => r.Rating),
+                TotalRatings = g.Count()
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        var totalMoviesWatched = ratingStats?.TotalMovies ?? 0;
+        var totalWatchTimeMinutes = ratingStats?.TotalWatchTime ?? 0;
+        var averageRating = ratingStats?.AverageRating ?? 0;
+        var totalRatings = ratingStats?.TotalRatings ?? 0;
+
+        // Get rating distribution from database
+        var ratingDistributionData = await _context.MovieRatings
+            .AsNoTracking()
+            .Where(r => r.UserId == request.UserId && !r.IsDeleted)
+            .GroupBy(r => (int)Math.Floor(r.Rating))
+            .Select(g => new { RatingFloor = g.Key, Count = g.Count() })
             .ToListAsync(cancellationToken);
 
-        var totalMoviesWatched = userRatings.Count;
-        var totalWatchTimeMinutes = userRatings.Sum(r => r.Movie.Runtime ?? 0);
-        var averageRating = userRatings.Any() ? userRatings.Average(r => r.Rating) : 0;
-        var totalRatings = userRatings.Count;
+        var ratingDistribution = new List<int>(new int[10]);
+        foreach (var item in ratingDistributionData)
+        {
+            var index = Math.Max(0, Math.Min(9, item.RatingFloor - 1));
+            ratingDistribution[index] = item.Count;
+        }
 
-        // Total comments
-        var totalComments = await _context.Comments
+        // Run remaining counts in parallel
+        var totalCommentsTask = _context.Comments
             .AsNoTracking()
             .CountAsync(c => c.UserId == request.UserId && !c.IsDeleted, cancellationToken);
 
-        // Total lists
-        var totalLists = await _context.MovieLists
+        var totalListsTask = _context.MovieLists
             .AsNoTracking()
             .CountAsync(l => l.UserId == request.UserId && !l.IsDeleted, cancellationToken);
 
-        // Rating distribution (1-10)
-        var ratingDistribution = new List<int>(new int[10]);
-        foreach (var rating in userRatings)
-        {
-            var index = Math.Max(0, Math.Min(9, (int)Math.Floor(rating.Rating) - 1));
-            ratingDistribution[index]++;
-        }
-
-        // Top genres - get movie genres for rated movies
-        var ratedMovieIds = userRatings.Select(r => r.MovieId).ToList();
-        var movieGenres = await _context.MovieGenres
+        // Get top genres using database aggregation
+        var topGenresTask = _context.MovieRatings
             .AsNoTracking()
-            .Where(mg => ratedMovieIds.Contains(mg.MovieId))
-            .Include(mg => mg.Genre)
-            .ToListAsync(cancellationToken);
-
-        var topGenres = movieGenres
+            .Where(r => r.UserId == request.UserId && !r.IsDeleted)
+            .Join(_context.MovieGenres, r => r.MovieId, mg => mg.MovieId, (r, mg) => mg)
             .GroupBy(mg => new { mg.GenreId, mg.Genre.Name })
             .Select(g => new GenreStatDto(
                 g.Key.GenreId,
                 g.Key.Name,
                 g.Count(),
-                totalMoviesWatched > 0 ? Math.Round((decimal)g.Count() / totalMoviesWatched * 100, 1) : 0
+                0 // Percentage will be calculated after
             ))
             .OrderByDescending(g => g.Count)
             .Take(10)
-            .ToList();
+            .ToListAsync(cancellationToken);
 
-        // Yearly stats
-        var yearlyStats = userRatings
+        // Get yearly stats from database
+        var yearlyStatsTask = _context.MovieRatings
+            .AsNoTracking()
+            .Where(r => r.UserId == request.UserId && !r.IsDeleted)
             .GroupBy(r => r.CreatedAt.Year)
             .Select(g => new YearlyStatDto(
                 g.Key,
@@ -113,7 +124,23 @@ public class GetUserStatsQueryHandler : IRequestHandler<GetUserStatsQuery, Resul
             ))
             .OrderByDescending(y => y.Year)
             .Take(5)
-            .ToList();
+            .ToListAsync(cancellationToken);
+
+        // Await all parallel tasks
+        await Task.WhenAll(totalCommentsTask, totalListsTask, topGenresTask, yearlyStatsTask);
+
+        var totalComments = await totalCommentsTask;
+        var totalLists = await totalListsTask;
+        var topGenresRaw = await topGenresTask;
+        var yearlyStats = await yearlyStatsTask;
+
+        // Calculate percentages for genres
+        var topGenres = topGenresRaw.Select(g => new GenreStatDto(
+            g.GenreId,
+            g.GenreName,
+            g.Count,
+            totalMoviesWatched > 0 ? Math.Round((decimal)g.Count / totalMoviesWatched * 100, 1) : 0
+        )).ToList();
 
         return Result<UserStatsDto>.Success(new UserStatsDto(
             totalMoviesWatched,

@@ -36,6 +36,10 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
         builder.HasIndex(c => c.UserId);
         builder.HasIndex(c => c.ParentCommentId);
 
+        // Compound index for UserId + IsDeleted + CreatedAt for optimized activity queries
+        builder.HasIndex(c => new { c.UserId, c.IsDeleted, c.CreatedAt })
+            .HasDatabaseName("IX_Comments_UserId_IsDeleted_CreatedAt");
+
         builder.HasOne(c => c.User)
             .WithMany()
             .HasForeignKey(c => c.UserId)

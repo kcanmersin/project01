@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CineSocial.Application.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CineSocial.Infrastructure;
 
@@ -44,6 +45,15 @@ public static class DependencyInjection
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IEmailVerificationService, EmailVerificationService>();
         services.AddScoped<IExternalAuthService, GoogleAuthService>();
+
+        var aiBaseUrl = configuration["AI_SERVICE_BASE_URL"]
+            ?? Environment.GetEnvironmentVariable("AI_SERVICE_BASE_URL")
+            ?? "http://localhost:8000/";
+
+        services.AddHttpClient<IRecommendationService, RecommendationService>(client =>
+        {
+            client.BaseAddress = new Uri(aiBaseUrl);
+        });
 
         return services;
     }

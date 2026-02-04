@@ -669,7 +669,7 @@ export const commentsApi = {
 
   async createComment(
     targetId: string,
-    targetType: number, // 1 = Movie
+    targetType: 'Movie',
     content: string,
     parentCommentId?: string
   ): Promise<Comment> {
@@ -701,7 +701,7 @@ export const commentsApi = {
     const response = await fetch(`${API_BASE_URL}/api/comments/${commentId}/vote`, {
       method: 'POST',
       headers: getAuthHeaders(),
-      body: JSON.stringify({ voteType: voteType === null ? null : voteType === 'Upvote' ? 0 : 1 }),
+      body: JSON.stringify({ voteType }),
     });
 
     if (!response.ok) {

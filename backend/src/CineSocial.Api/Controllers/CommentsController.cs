@@ -1,3 +1,4 @@
+using System.Text.Json;
 using CineSocial.Application.Common;
 using CineSocial.Application.Features.Comments;
 using CineSocial.Application.Features.Comments.Commands.CreateComment;
@@ -61,11 +62,61 @@ public class CommentsController : BaseApiController
     /// </summary>
     [HttpPost("{id:guid}/vote")]
     [Authorize]
-    public async Task<ActionResult<CommentVoteResultDto>> VoteComment(Guid id, [FromBody] VoteRequest request)
+    public async Task<ActionResult<CommentVoteResultDto>> VoteComment(Guid id, [FromBody] JsonElement body)
     {
         var userId = GetCurrentUserIdRequired();
-        var result = await Mediator.Send(new VoteCommentCommand(userId, id, request.VoteType));
+
+        body.TryGetProperty("voteType", out var voteTypeElement);
+        if (!TryParseVoteType(voteTypeElement, out var voteType))
+        {
+            return BadRequest(new ProblemDetails
+            {
+                Status = 400,
+                Title = "Bad Request",
+                Detail = "Invalid voteType. Use 'Upvote', 'Downvote', number 0/1, or null."
+            });
+        }
+
+        var result = await Mediator.Send(new VoteCommentCommand(userId, id, voteType));
         return HandleResult(result);
+    }
+
+    private static bool TryParseVoteType(JsonElement voteTypeElement, out ReactionType? voteType)
+    {
+        voteType = null;
+        if (voteTypeElement.ValueKind == JsonValueKind.Null || voteTypeElement.ValueKind == JsonValueKind.Undefined)
+        {
+            return true;
+        }
+
+        if (voteTypeElement.ValueKind == JsonValueKind.String)
+        {
+            var value = voteTypeElement.GetString();
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return true;
+            }
+
+            if (Enum.TryParse<ReactionType>(value, true, out var parsed))
+            {
+                voteType = parsed;
+                return true;
+            }
+
+            return false;
+        }
+
+        if (voteTypeElement.ValueKind == JsonValueKind.Number && voteTypeElement.TryGetInt32(out var intValue))
+        {
+            if (Enum.IsDefined(typeof(ReactionType), intValue))
+            {
+                voteType = (ReactionType)intValue;
+                return true;
+            }
+            return false;
+        }
+
+        return false;
     }
 }
 
@@ -76,4 +127,3 @@ public record CreateCommentRequest(
     string Content
 );
 
-public record VoteRequest(ReactionType? VoteType);

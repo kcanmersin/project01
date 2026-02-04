@@ -25,6 +25,10 @@ public class MovieRatingConfiguration : IEntityTypeConfiguration<MovieRating>
 
         builder.HasIndex(r => r.MovieId);
 
+        // Compound index for UserId + IsDeleted + CreatedAt for optimized filtered queries
+        builder.HasIndex(r => new { r.UserId, r.IsDeleted, r.CreatedAt })
+            .HasDatabaseName("IX_MovieRatings_UserId_IsDeleted_CreatedAt");
+
         builder.HasOne(r => r.User)
             .WithMany()
             .HasForeignKey(r => r.UserId)

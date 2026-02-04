@@ -167,14 +167,29 @@
   svg {
     width: 16px;
     height: 16px;
+    transition: transform 0.2s ease;
   }
 
-  &:hover {
+  &:hover:not(:disabled) {
     color: $light-100;
+
+    svg {
+      transform: scale(1.15);
+    }
   }
 
   &.active {
     color: $electric-violet;
+  }
+
+  &.loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 }
 

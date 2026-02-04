@@ -38,12 +38,6 @@ public class VoteCommentCommandHandler : IRequestHandler<VoteCommentCommand, Res
             return Result<CommentVoteResultDto>.NotFound("Comment not found");
         }
 
-        // Can't vote on own comment
-        if (comment.UserId == request.UserId)
-        {
-            return Result<CommentVoteResultDto>.BadRequest("You cannot vote on your own comment");
-        }
-
         var existingReaction = await _context.CommentReactions
             .FirstOrDefaultAsync(r => r.UserId == request.UserId && r.CommentId == request.CommentId, cancellationToken);
 

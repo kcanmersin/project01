@@ -24,32 +24,28 @@ public class GetMovieCommentsQueryHandler : IRequestHandler<GetMovieCommentsQuer
 
     public async Task<Result<PagedResult<CommentDto>>> Handle(GetMovieCommentsQuery request, CancellationToken cancellationToken)
     {
-        // Get root comments (no parent)
-        var query = _context.Comments
+        var allComments = await _context.Comments
             .AsNoTracking()
-            .Where(c => c.TargetId == request.MovieId
-                && c.TargetType == CommentTargetType.Movie
-                && c.ParentCommentId == null)
-            .OrderByDescending(c => c.CreatedAt);
+            .Where(c => c.TargetId == request.MovieId && c.TargetType == CommentTargetType.Movie)
+            .ToListAsync(cancellationToken);
 
-        var totalCount = await query.CountAsync(cancellationToken);
+        var rootComments = allComments
+            .Where(c => c.ParentCommentId == null)
+            .OrderByDescending(c => c.CreatedAt)
+            .ToList();
 
-        var rootComments = await query
+        var totalCount = rootComments.Count;
+
+        var pagedRoots = rootComments
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
-            .ToListAsync(cancellationToken);
+            .ToList();
 
-        var rootCommentIds = rootComments.Select(c => c.Id).ToList();
+        var repliesByParent = allComments
+            .Where(c => c.ParentCommentId != null)
+            .GroupBy(c => c.ParentCommentId!.Value)
+            .ToDictionary(g => g.Key, g => g.OrderBy(c => c.CreatedAt).ToList());
 
-        // Get all replies for these root comments
-        var replies = await _context.Comments
-            .AsNoTracking()
-            .Where(c => c.ParentCommentId != null && rootCommentIds.Contains(c.ParentCommentId.Value))
-            .OrderBy(c => c.CreatedAt)
-            .ToListAsync(cancellationToken);
-
-        // Get all user IDs
-        var allComments = rootComments.Concat(replies).ToList();
         var userIds = allComments.Select(c => c.UserId).Distinct().ToList();
 
         // Get users
@@ -69,16 +65,8 @@ public class GetMovieCommentsQueryHandler : IRequestHandler<GetMovieCommentsQuer
                 .ToDictionaryAsync(r => r.CommentId, r => r.ReactionType.ToString(), cancellationToken);
         }
 
-        // Build DTOs
-        var replyDtos = replies
-            .GroupBy(r => r.ParentCommentId!.Value)
-            .ToDictionary(
-                g => g.Key,
-                g => g.Select(r => BuildCommentDto(r, users, userVotes)).ToList()
-            );
-
-        var commentDtos = rootComments
-            .Select(c => BuildCommentDto(c, users, userVotes, replyDtos.GetValueOrDefault(c.Id)))
+        var commentDtos = pagedRoots
+            .Select(c => BuildCommentDto(c, users, userVotes, repliesByParent))
             .ToList();
 
         return Result<PagedResult<CommentDto>>.Success(
@@ -90,10 +78,18 @@ public class GetMovieCommentsQueryHandler : IRequestHandler<GetMovieCommentsQuer
         Domain.Entities.Social.Comment comment,
         Dictionary<Guid, Domain.Entities.User.User> users,
         Dictionary<Guid, string> userVotes,
-        List<CommentDto>? replies = null)
+        Dictionary<Guid, List<Domain.Entities.Social.Comment>> repliesByParent)
     {
         var user = users.GetValueOrDefault(comment.UserId);
         userVotes.TryGetValue(comment.Id, out var currentUserVote);
+
+        List<CommentDto>? replies = null;
+        if (repliesByParent.TryGetValue(comment.Id, out var replyEntities))
+        {
+            replies = replyEntities
+                .Select(r => BuildCommentDto(r, users, userVotes, repliesByParent))
+                .ToList();
+        }
 
         return new CommentDto(
             comment.Id,
