@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   moviesApi,
   ratingsApi,
@@ -33,6 +33,8 @@ export const MovieDetailPage = () => {
   const [showListModal, setShowListModal] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
 
+  const userId = user?.id;
+
   useEffect(() => {
     if (!id) return;
 
@@ -53,7 +55,7 @@ export const MovieDetailPage = () => {
         setComments(commentsData);
 
         // Fetch user-specific data if logged in
-        if (user) {
+        if (userId) {
           const [userRating, lists] = await Promise.all([
             ratingsApi.getMyRating(id),
             listsApi.getMyListsForMovie(id),
@@ -69,7 +71,7 @@ export const MovieDetailPage = () => {
     };
 
     fetchData();
-  }, [id, user]);
+  }, [id, userId]);
 
   const handleRating = async (rating: number) => {
     if (!user || !id) {
@@ -277,7 +279,11 @@ export const MovieDetailPage = () => {
               <h2>Oyuncular</h2>
               <div className={styles.cast}>
                 {movie.cast.slice(0, 10).map(member => (
-                  <div key={member.personId} className={styles.castCard}>
+                  <Link
+                    key={member.personId}
+                    to={`/person/${member.personId}`}
+                    className={styles.castCard}
+                  >
                     <div className={styles.castImage}>
                       {member.profilePath ? (
                         <img src={getProfileUrl(member.profilePath) || ''} alt={member.name} />
@@ -287,7 +293,7 @@ export const MovieDetailPage = () => {
                     </div>
                     <div className={styles.castName}>{member.name}</div>
                     <div className={styles.castCharacter}>{member.character}</div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </section>

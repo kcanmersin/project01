@@ -1,8 +1,11 @@
 using System.Security.Claims;
 using CineSocial.Application.Features.Auth;
+using CineSocial.Application.Features.Auth.Commands.ChangePassword;
+using CineSocial.Application.Features.Auth.Commands.ForgotPassword;
 using CineSocial.Application.Features.Auth.Commands.GoogleLogin;
 using CineSocial.Application.Features.Auth.Commands.Register;
 using CineSocial.Application.Features.Auth.Commands.ResendVerification;
+using CineSocial.Application.Features.Auth.Commands.ResetPassword;
 using CineSocial.Application.Features.Auth.Commands.VerifyEmail;
 using CineSocial.Application.Features.Auth.Queries.GetCurrentUser;
 using CineSocial.Application.Features.Auth.Queries.Login;
@@ -74,6 +77,55 @@ public class AuthController : BaseApiController
     public async Task<ActionResult> ResendVerification([FromBody] ResendVerificationRequest request)
     {
         var command = new ResendVerificationCommand(request.Email);
+        var result = await Mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    /// <summary>
+    /// Request password reset email
+    /// </summary>
+    [HttpPost("forgot-password")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<string>> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        var command = new ForgotPasswordCommand(request.Email);
+        var result = await Mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    /// <summary>
+    /// Reset password with token
+    /// </summary>
+    [HttpPost("reset-password")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<string>> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        var command = new ResetPasswordCommand(request.Token, request.NewPassword);
+        var result = await Mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    /// <summary>
+    /// Change password (requires authentication)
+    /// </summary>
+    [Authorize]
+    [HttpPost("change-password")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<string>> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+            ?? User.FindFirst("userId")?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+        {
+            return Unauthorized();
+        }
+
+        var command = new ChangePasswordCommand(userId, request.CurrentPassword, request.NewPassword);
         var result = await Mediator.Send(command);
         return HandleResult(result);
     }

@@ -920,6 +920,42 @@ namespace CineSocial.Infrastructure.Migrations
                     b.ToTable("MovieRatings", (string)null);
                 });
 
+            modelBuilder.Entity("CineSocial.Domain.Entities.Social.UserFollow", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("FollowingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowerId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.HasIndex("FollowerId", "FollowingId")
+                        .IsUnique();
+
+                    b.ToTable("UserFollows", (string)null);
+                });
+
             modelBuilder.Entity("CineSocial.Domain.Entities.User.EmailVerificationToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -970,11 +1006,64 @@ namespace CineSocial.Infrastructure.Migrations
                     b.ToTable("EmailVerificationTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.PasswordResetToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UsedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordResetTokens", (string)null);
+                });
+
             modelBuilder.Entity("CineSocial.Domain.Entities.User.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("CoverImageId")
                         .HasColumnType("uuid");
@@ -1375,10 +1464,40 @@ namespace CineSocial.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CineSocial.Domain.Entities.Social.UserFollow", b =>
+                {
+                    b.HasOne("CineSocial.Domain.Entities.User.User", "Follower")
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CineSocial.Domain.Entities.User.User", "Following")
+                        .WithMany()
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
+                });
+
             modelBuilder.Entity("CineSocial.Domain.Entities.User.EmailVerificationToken", b =>
                 {
                     b.HasOne("CineSocial.Domain.Entities.User.User", "User")
                         .WithMany("VerificationTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CineSocial.Domain.Entities.User.PasswordResetToken", b =>
+                {
+                    b.HasOne("CineSocial.Domain.Entities.User.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

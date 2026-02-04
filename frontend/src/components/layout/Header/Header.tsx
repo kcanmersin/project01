@@ -74,6 +74,7 @@ export const Header = () => {
 
   const navItems = [
     { label: 'Ana Sayfa', path: '/' },
+    { label: 'Keşfet', path: '/discover' },
     { label: 'Filmler', path: '/movies' },
     { label: 'Kategoriler', path: '/genres' },
     { label: 'Listelerim', path: '/my-lists' },

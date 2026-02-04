@@ -13,6 +13,7 @@ public interface IApplicationDbContext
 {
     // User entities
     DbSet<User> Users { get; }
+    DbSet<PasswordResetToken> PasswordResetTokens { get; }
 
     // Movie entities
     DbSet<MovieEntity> Movies { get; }
@@ -35,6 +36,7 @@ public interface IApplicationDbContext
     DbSet<Comment> Comments { get; }
     DbSet<CommentReaction> CommentReactions { get; }
     DbSet<ListFavorite> ListFavorites { get; }
+    DbSet<UserFollow> UserFollows { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

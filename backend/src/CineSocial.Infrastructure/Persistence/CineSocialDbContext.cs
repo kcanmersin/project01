@@ -17,6 +17,7 @@ public class CineSocialDbContext : DbContext, IApplicationDbContext
     public DbSet<User> Users { get; set; }
     public DbSet<UserExternalLogin> UserExternalLogins { get; set; }
     public DbSet<EmailVerificationToken> EmailVerificationTokens { get; set; }
+    public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
     // Media Entities
     public DbSet<StoredImage> StoredImages { get; set; }
@@ -48,6 +49,7 @@ public class CineSocialDbContext : DbContext, IApplicationDbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<CommentReaction> CommentReactions { get; set; }
     public DbSet<ListFavorite> ListFavorites { get; set; }
+    public DbSet<UserFollow> UserFollows { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

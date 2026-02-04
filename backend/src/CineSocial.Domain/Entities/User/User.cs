@@ -24,6 +24,11 @@ public class User : BaseEntity
     /// </summary>
     public Guid? CoverImageId { get; set; }
 
+    /// <summary>
+    /// User bio/description (max 500 chars)
+    /// </summary>
+    public string? Bio { get; set; }
+
     public ICollection<UserExternalLogin> ExternalLogins { get; set; } = new List<UserExternalLogin>();
     public ICollection<EmailVerificationToken> VerificationTokens { get; set; } = new List<EmailVerificationToken>();
 }

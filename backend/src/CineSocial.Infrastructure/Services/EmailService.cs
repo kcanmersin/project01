@@ -25,6 +25,13 @@ public class EmailService : IEmailService
         await SendEmailAsync(toEmail, subject, body, cancellationToken);
     }
 
+    public async Task SendPasswordResetAsync(string toEmail, string username, string resetLink, CancellationToken cancellationToken = default)
+    {
+        var subject = "CineFeel - Şifre Sıfırlama";
+        var body = GetPasswordResetEmailTemplate(username, resetLink);
+        await SendEmailAsync(toEmail, subject, body, cancellationToken);
+    }
+
     public async Task SendWelcomeEmailAsync(string toEmail, string username, CancellationToken cancellationToken = default)
     {
         var subject = "CineFeel'e Hoş Geldiniz!";
@@ -242,6 +249,100 @@ public class EmailService : IEmailService
                 <li>👥 Diğer film severlerle bağlantı kur</li>
             </ul>
             <p>Keyifli keşifler!</p>
+        </div>
+        <div class=""footer"">
+            <p>&copy; 2024 CineFeel. Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+</body>
+</html>";
+    }
+
+    private static string GetPasswordResetEmailTemplate(string username, string resetLink)
+    {
+        return $@"
+<!DOCTYPE html>
+<html lang=""tr"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Şifre Sıfırlama</title>
+    <style>
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }}
+        .container {{
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }}
+        .header {{
+            text-align: center;
+            margin-bottom: 30px;
+        }}
+        .header h1 {{
+            color: #e50914;
+            margin: 0;
+            font-size: 32px;
+        }}
+        .content {{
+            margin-bottom: 30px;
+        }}
+        .content h2 {{
+            color: #333;
+            margin-top: 0;
+        }}
+        .button {{
+            display: inline-block;
+            background-color: #e50914;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 20px 0;
+        }}
+        .button:hover {{
+            background-color: #b20710;
+        }}
+        .footer {{
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }}
+        .link-text {{
+            word-break: break-all;
+            color: #666;
+            font-size: 12px;
+        }}
+    </style>
+</head>
+<body>
+    <div class=""container"">
+        <div class=""header"">
+            <h1>🎬 CineFeel</h1>
+        </div>
+        <div class=""content"">
+            <h2>Merhaba {username}!</h2>
+            <p>Şifrenizi sıfırlamak için bir istek aldık. Aşağıdaki butona tıklayarak yeni şifrenizi belirleyebilirsiniz.</p>
+            <p style=""text-align: center;"">
+                <a href=""{resetLink}"" class=""button"">Şifremi Sıfırla</a>
+            </p>
+            <p>Buton çalışmıyorsa, aşağıdaki linki tarayıcınıza kopyalayıp yapıştırabilirsiniz:</p>
+            <p class=""link-text"">{resetLink}</p>
+            <p><strong>Bu link 1 saat geçerlidir.</strong></p>
+            <p>Eğer bu isteği siz yapmadıysanız, bu emaili görmezden gelebilirsiniz. Şifreniz değiştirilmeyecektir.</p>
         </div>
         <div class=""footer"">
             <p>&copy; 2024 CineFeel. Tüm hakları saklıdır.</p>

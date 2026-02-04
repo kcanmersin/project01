@@ -49,4 +49,6 @@ public class TestDbContext : DbContext, IApplicationDbContext
     public DbSet<Comment> Comments { get; set; } = null!;
     public DbSet<CommentReaction> CommentReactions { get; set; } = null!;
     public DbSet<ListFavorite> ListFavorites { get; set; } = null!;
+    public DbSet<UserFollow> UserFollows { get; set; } = null!;
+    public DbSet<PasswordResetToken> PasswordResetTokens { get; set; } = null!;
 }
