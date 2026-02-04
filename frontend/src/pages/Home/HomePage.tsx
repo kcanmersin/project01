@@ -31,6 +31,7 @@ const GENRES: Genre[] = [
 export const HomePage = () => {
   const navigate = useNavigate();
   const user = tokenStorage.getUser();
+  const isLoggedIn = !!user;
 
   const [loading, setLoading] = useState(true);
   const [trending, setTrending] = useState<Movie[]>([]);
@@ -41,7 +42,7 @@ export const HomePage = () => {
   const [genres] = useState<Genre[]>(GENRES);
 
   useEffect(() => {
-    if (!user) {
+    if (!isLoggedIn) {
       navigate('/login');
       return;
     }
@@ -75,7 +76,7 @@ export const HomePage = () => {
     };
 
     fetchData();
-  }, [user, navigate]);
+  }, [isLoggedIn, navigate]);
 
   if (!user) return null;
 

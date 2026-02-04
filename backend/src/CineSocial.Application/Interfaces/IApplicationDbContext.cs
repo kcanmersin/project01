@@ -35,6 +35,7 @@ public interface IApplicationDbContext
     DbSet<Comment> Comments { get; }
     DbSet<CommentReaction> CommentReactions { get; }
     DbSet<ListFavorite> ListFavorites { get; }
+    DbSet<UserFollow> UserFollows { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

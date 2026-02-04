@@ -658,3 +658,242 @@ export const commentsApi = {
     return response.json();
   },
 };
+
+// ============= USER PROFILE TYPES =============
+
+export interface UserProfile {
+  id: string;
+  username: string;
+  profileImageId: string | null;
+  coverImageId: string | null;
+  bio: string | null;
+  createdAt: string;
+  isOwnProfile: boolean;
+  followersCount: number;
+  followingCount: number;
+  isFollowedByCurrentUser: boolean;
+}
+
+export interface UserStats {
+  totalMoviesWatched: number;
+  totalWatchTimeMinutes: number;
+  averageRating: number;
+  totalRatings: number;
+  totalComments: number;
+  totalLists: number;
+  topGenres: GenreStat[];
+  ratingDistribution: number[];
+  yearlyStats: YearlyStat[];
+}
+
+export interface GenreStat {
+  genreId: number;
+  genreName: string;
+  count: number;
+  percentage: number;
+}
+
+export interface YearlyStat {
+  year: number;
+  moviesWatched: number;
+  averageRating: number;
+}
+
+export interface UserActivity {
+  type: 'rating' | 'comment' | 'list';
+  targetId: string;
+  targetTitle: string;
+  targetPosterPath: string | null;
+  rating: number | null;
+  content: string | null;
+  createdAt: string;
+}
+
+export interface FollowUser {
+  id: string;
+  username: string;
+  profileImageId: string | null;
+  followedAt: string;
+}
+
+// ============= USERS API =============
+
+export const usersApi = {
+  async getUserProfile(username: string): Promise<UserProfile> {
+    const response = await fetch(`${API_BASE_URL}/api/users/${username}`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user profile');
+    }
+
+    return response.json();
+  },
+
+  async getUserStats(userId: string): Promise<UserStats> {
+    const response = await fetch(`${API_BASE_URL}/api/users/${userId}/stats`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user stats');
+    }
+
+    return response.json();
+  },
+
+  async getUserActivity(userId: string, page: number = 1, pageSize: number = 20): Promise<PagedResult<UserActivity>> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/users/${userId}/activity?page=${page}&pageSize=${pageSize}`,
+      { headers: getAuthHeaders() }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user activity');
+    }
+
+    return response.json();
+  },
+
+  async getUserLists(userId: string, listType?: string): Promise<MovieList[]> {
+    const params = listType ? `?listType=${listType}` : '';
+    const response = await fetch(`${API_BASE_URL}/api/users/${userId}/lists${params}`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user lists');
+    }
+
+    return response.json();
+  },
+
+  async updateProfile(bio: string | null): Promise<boolean> {
+    const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ bio }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update profile');
+    }
+
+    return response.json();
+  },
+};
+
+// ============= FOLLOWS API =============
+
+export const followsApi = {
+  async followUser(userId: string): Promise<boolean> {
+    const response = await fetch(`${API_BASE_URL}/api/follows/${userId}`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to follow user');
+    }
+
+    return response.json();
+  },
+
+  async unfollowUser(userId: string): Promise<boolean> {
+    const response = await fetch(`${API_BASE_URL}/api/follows/${userId}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to unfollow user');
+    }
+
+    return response.json();
+  },
+
+  async getFollowers(userId: string, page: number = 1, pageSize: number = 20): Promise<PagedResult<FollowUser>> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/follows/${userId}/followers?page=${page}&pageSize=${pageSize}`,
+      { headers: getAuthHeaders() }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch followers');
+    }
+
+    return response.json();
+  },
+
+  async getFollowing(userId: string, page: number = 1, pageSize: number = 20): Promise<PagedResult<FollowUser>> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/follows/${userId}/following?page=${page}&pageSize=${pageSize}`,
+      { headers: getAuthHeaders() }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch following');
+    }
+
+    return response.json();
+  },
+};
+
+// ============= PERSON TYPES =============
+
+export interface PersonDetail {
+  id: string;
+  tmdbId: number;
+  name: string;
+  biography: string | null;
+  birthday: string | null;
+  deathday: string | null;
+  placeOfBirth: string | null;
+  profilePath: string | null;
+  popularity: number | null;
+  gender: number | null;
+  knownForDepartment: string | null;
+  imdbId: string | null;
+  age: number;
+  moviesAsCast: PersonMovie[];
+  moviesAsCrew: PersonCrewMovie[];
+}
+
+export interface PersonMovie {
+  movieId: string;
+  tmdbId: number;
+  title: string;
+  posterPath: string | null;
+  releaseDate: string | null;
+  voteAverage: number | null;
+  character: string | null;
+  castOrder: number | null;
+}
+
+export interface PersonCrewMovie {
+  movieId: string;
+  tmdbId: number;
+  title: string;
+  posterPath: string | null;
+  releaseDate: string | null;
+  voteAverage: number | null;
+  job: string | null;
+  department: string | null;
+}
+
+// ============= PEOPLE API =============
+
+export const peopleApi = {
+  async getPersonDetail(personId: string): Promise<PersonDetail> {
+    const response = await fetch(`${API_BASE_URL}/api/people/${personId}`, {
+      headers: getAuthHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch person details');
+    }
+
+    return response.json();
+  },
+};
