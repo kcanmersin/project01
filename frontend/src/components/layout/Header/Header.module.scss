@@ -176,6 +176,7 @@
   padding: $spacing-4 $spacing-5;
   background: transparent;
   border: none;
+  border-bottom: 1px solid $glass-border;
   font-size: $text-base;
   color: $color-text-main;
   outline: none;
@@ -185,11 +186,106 @@
   }
 }
 
+// Search Tabs
+.searchTabs {
+  display: flex;
+  gap: $spacing-1;
+  padding: $spacing-2 $spacing-3;
+  border-bottom: 1px solid $glass-border;
+  background: rgba($color-bg-elevated, 0.5);
+}
+
+.searchTab {
+  padding: $spacing-2 $spacing-3;
+  font-size: $text-xs;
+  font-weight: $font-medium;
+  color: $color-text-muted;
+  background: transparent;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $color-text-main;
+    background: $glass-bg-light;
+  }
+
+  &.active {
+    color: $color-primary;
+    background: rgba($color-primary, 0.15);
+  }
+}
+
+// Search Loading
+.searchLoading {
+  @include flex-center;
+  gap: $spacing-2;
+  padding: $spacing-6;
+  color: $color-text-muted;
+  font-size: $text-sm;
+}
+
+.loadingSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid $glass-border;
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// No Results
+.noResults {
+  @include flex-center;
+  padding: $spacing-6;
+  color: $color-text-muted;
+  font-size: $text-sm;
+}
+
 .searchResults {
-  border-top: 1px solid $glass-border;
   max-height: 400px;
   overflow-y: auto;
   @include custom-scrollbar;
+}
+
+// Result Section
+.resultSection {
+  &:not(:last-child) {
+    border-bottom: 1px solid $glass-border;
+  }
+}
+
+.resultSectionTitle {
+  padding: $spacing-2 $spacing-4;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba($color-bg-elevated, 0.5);
+}
+
+// View All Link
+.viewAllLink {
+  display: block;
+  padding: $spacing-3 $spacing-4;
+  text-align: center;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: $color-primary;
+  background: rgba($color-primary, 0.05);
+  border-top: 1px solid $glass-border;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba($color-primary, 0.1);
+  }
 }
 
 .searchResult {
@@ -240,6 +336,12 @@
   @include truncate;
 }
 
+.searchResultMeta {
+  font-size: $text-xs;
+  color: $color-text-muted;
+  @include truncate;
+}
+
 .searchResultYear {
   font-size: $text-xs;
   color: $color-text-muted;
@@ -255,6 +357,40 @@
   span {
     font-size: $text-xs;
   }
+}
+
+// Avatar for People/Users
+.searchResultAvatar {
+  width: 45px;
+  height: 45px;
+  border-radius: $radius-full;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: $color-bg-elevated;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.noAvatar {
+  @include flex-center;
+  width: 100%;
+  height: 100%;
+  font-size: $text-lg;
+  background: linear-gradient(135deg, $color-bg-elevated, $color-bg-card);
+}
+
+.userInitial {
+  @include flex-center;
+  width: 100%;
+  height: 100%;
+  font-size: $text-base;
+  font-weight: $font-bold;
+  color: $color-text-main;
+  background: linear-gradient(135deg, $color-accent, color.adjust($color-accent, $lightness: -15%));
 }
 
 // Profile

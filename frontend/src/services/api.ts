@@ -20,6 +20,7 @@ export interface Movie {
 
 export interface Genre {
   id: number;
+  tmdbId?: number;
   name: string;
 }
 
@@ -948,5 +949,129 @@ export const peopleApi = {
     }
 
     return response.json();
+  },
+};
+
+// ============= GENRES API =============
+
+export const genresApi = {
+  async getGenres(): Promise<Genre[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/genres`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        return [];
+      }
+
+      return response.json();
+    } catch {
+      return [];
+    }
+  },
+};
+
+// ============= AI RECOMMENDATIONS API =============
+
+export const aiApi = {
+  async getMovieRecommendations(tmdbId: number, count: number = 10): Promise<Movie[]> {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/aimanager/movies/${tmdbId}/recommendations?count=${count}`,
+        { headers: getAuthHeaders() }
+      );
+
+      if (!response.ok) {
+        return [];
+      }
+
+      return response.json();
+    } catch {
+      // AI service might be unavailable, return empty array
+      return [];
+    }
+  },
+};
+
+// ============= UNIFIED SEARCH API =============
+
+export type SearchType = 'movies' | 'people' | 'users';
+
+export interface MovieSearchResult {
+  id: string;
+  tmdbId: number;
+  title: string;
+  posterPath: string | null;
+  year: number | null;
+  voteAverage: number | null;
+}
+
+export interface PersonSearchResult {
+  id: string;
+  tmdbId: number;
+  name: string;
+  profilePath: string | null;
+  knownForDepartment: string | null;
+}
+
+export interface UserSearchResult {
+  id: string;
+  username: string;
+  profileImageId: string | null;
+  bio: string | null;
+}
+
+export interface UnifiedSearchResult {
+  movies: MovieSearchResult[];
+  people: PersonSearchResult[];
+  users: UserSearchResult[];
+}
+
+export const searchApi = {
+  async search(
+    query: string,
+    type?: SearchType,
+    limit: number = 6
+  ): Promise<UnifiedSearchResult> {
+    try {
+      const params = new URLSearchParams({ q: query, limit: limit.toString() });
+      if (type) {
+        // Convert to backend enum format
+        const typeMap: Record<SearchType, string> = {
+          movies: '0',
+          people: '1',
+          users: '2',
+        };
+        params.set('type', typeMap[type]);
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/search?${params}`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        return { movies: [], people: [], users: [] };
+      }
+
+      return response.json();
+    } catch {
+      return { movies: [], people: [], users: [] };
+    }
+  },
+
+  async searchMovies(query: string, limit: number = 6): Promise<MovieSearchResult[]> {
+    const result = await this.search(query, 'movies', limit);
+    return result.movies;
+  },
+
+  async searchPeople(query: string, limit: number = 6): Promise<PersonSearchResult[]> {
+    const result = await this.search(query, 'people', limit);
+    return result.people;
+  },
+
+  async searchUsers(query: string, limit: number = 6): Promise<UserSearchResult[]> {
+    const result = await this.search(query, 'users', limit);
+    return result.users;
   },
 };

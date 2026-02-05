@@ -2,35 +2,15 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import {
   moviesApi,
+  genresApi,
   type Movie,
+  type Genre,
   type PagedResult,
   type MoviesQueryParams,
 } from '../../services/api';
 import { getImageUrl } from '../../services/tmdb';
 import { Header } from '../../components/layout/Header/Header';
 import styles from './DiscoverPage.module.scss';
-
-// Genre list
-const GENRES = [
-  { id: 28, name: 'Aksiyon' },
-  { id: 12, name: 'Macera' },
-  { id: 16, name: 'Animasyon' },
-  { id: 35, name: 'Komedi' },
-  { id: 80, name: 'Suç' },
-  { id: 99, name: 'Belgesel' },
-  { id: 18, name: 'Dram' },
-  { id: 10751, name: 'Aile' },
-  { id: 14, name: 'Fantastik' },
-  { id: 36, name: 'Tarih' },
-  { id: 27, name: 'Korku' },
-  { id: 10402, name: 'Müzik' },
-  { id: 9648, name: 'Gizem' },
-  { id: 10749, name: 'Romantik' },
-  { id: 878, name: 'Bilim Kurgu' },
-  { id: 53, name: 'Gerilim' },
-  { id: 10752, name: 'Savaş' },
-  { id: 37, name: 'Western' },
-];
 
 const SORT_OPTIONS = [
   { value: 'Popularity', label: 'Popülerlik' },
@@ -68,9 +48,28 @@ export const DiscoverPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [movies, setMovies] = useState<PagedResult<Movie> | null>(null);
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [genresLoading, setGenresLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
+
+  // Fetch genres from backend
+  useEffect(() => {
+    const fetchGenres = async () => {
+      setGenresLoading(true);
+      try {
+        const data = await genresApi.getGenres();
+        setGenres(data);
+      } catch (error) {
+        console.error('Error fetching genres:', error);
+      } finally {
+        setGenresLoading(false);
+      }
+    };
+
+    fetchGenres();
+  }, []);
 
   // Initialize filters from URL params
   useEffect(() => {
@@ -205,19 +204,29 @@ export const DiscoverPage = () => {
             {/* Genres */}
             <div className={styles.filterSection}>
               <label className={styles.filterLabel}>Türler</label>
-              <div className={styles.genreGrid}>
-                {GENRES.map(genre => (
-                  <button
-                    key={genre.id}
-                    className={`${styles.genreChip} ${
-                      filters.genreIds.includes(genre.id) ? styles.active : ''
-                    }`}
-                    onClick={() => handleGenreToggle(genre.id)}
-                  >
-                    {genre.name}
-                  </button>
-                ))}
-              </div>
+              {genresLoading ? (
+                <div className={styles.genresLoading}>
+                  <div className={styles.genresSkeleton}>
+                    {Array.from({ length: 9 }).map((_, i) => (
+                      <div key={i} className={styles.skeletonChip} />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={styles.genreGrid}>
+                  {genres.map(genre => (
+                    <button
+                      key={genre.id}
+                      className={`${styles.genreChip} ${
+                        filters.genreIds.includes(genre.id) ? styles.active : ''
+                      }`}
+                      onClick={() => handleGenreToggle(genre.id)}
+                    >
+                      {genre.name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Year Range */}

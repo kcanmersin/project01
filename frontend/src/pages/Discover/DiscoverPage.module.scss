@@ -168,6 +168,45 @@
   }
 }
 
+// Genre Loading Skeleton
+.genresLoading {
+  padding: 0.25rem 0;
+}
+
+.genresSkeleton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skeletonChip {
+  width: 70px;
+  height: 32px;
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 20px;
+  animation: shimmer 1.5s infinite;
+
+  &:nth-child(1) { width: 75px; }
+  &:nth-child(2) { width: 65px; }
+  &:nth-child(3) { width: 85px; }
+  &:nth-child(4) { width: 60px; }
+  &:nth-child(5) { width: 70px; }
+  &:nth-child(6) { width: 80px; }
+  &:nth-child(7) { width: 55px; }
+  &:nth-child(8) { width: 75px; }
+  &:nth-child(9) { width: 65px; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 .rangeInputs {
   display: flex;
   align-items: center;
