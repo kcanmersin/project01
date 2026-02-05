@@ -11,6 +11,7 @@ import { PersonPage } from './pages/Person/PersonPage';
 import { ListDetailPage } from './pages/ListDetail/ListDetailPage';
 import { DiscoverPage } from './pages/Discover/DiscoverPage';
 import { SettingsPage } from './pages/Settings/SettingsPage';
+import { SearchPage } from './pages/Search/SearchPage';
 import { tokenStorage } from './services/api';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/person/:id" element={<PersonPage />} />
           <Route path="/list/:id" element={<ListDetailPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>

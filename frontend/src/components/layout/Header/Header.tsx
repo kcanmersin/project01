@@ -1,8 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { tokenStorage, moviesApi, type Movie } from '../../../services/api';
-import { getImageUrl } from '../../../services/tmdb';
+import {
+  tokenStorage,
+  searchApi,
+  type SearchType,
+  type MovieSearchResult,
+  type PersonSearchResult,
+  type UserSearchResult,
+} from '../../../services/api';
+import { getImageUrl, getProfileUrl } from '../../../services/tmdb';
 import styles from './Header.module.scss';
+
+type SearchTab = 'all' | SearchType;
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -10,7 +19,11 @@ export const Header = () => {
   const user = tokenStorage.getUser();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<Movie[]>([]);
+  const [activeTab, setActiveTab] = useState<SearchTab>('all');
+  const [movieResults, setMovieResults] = useState<MovieSearchResult[]>([]);
+  const [peopleResults, setPeopleResults] = useState<PersonSearchResult[]>([]);
+  const [userResults, setUserResults] = useState<UserSearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -40,23 +53,31 @@ export const Header = () => {
   }, []);
 
   useEffect(() => {
-    const searchMovies = async () => {
+    const performSearch = async () => {
       if (searchQuery.length < 2) {
-        setSearchResults([]);
+        setMovieResults([]);
+        setPeopleResults([]);
+        setUserResults([]);
         return;
       }
 
+      setIsSearching(true);
       try {
-        const response = await moviesApi.searchMovies(searchQuery, 1, 6);
-        setSearchResults(response.items);
+        const searchType = activeTab === 'all' ? undefined : activeTab;
+        const results = await searchApi.search(searchQuery, searchType, 6);
+        setMovieResults(results.movies);
+        setPeopleResults(results.people);
+        setUserResults(results.users);
       } catch (error) {
         console.error('Search error:', error);
+      } finally {
+        setIsSearching(false);
       }
     };
 
-    const debounce = setTimeout(searchMovies, 300);
+    const debounce = setTimeout(performSearch, 300);
     return () => clearTimeout(debounce);
-  }, [searchQuery]);
+  }, [searchQuery, activeTab]);
 
   const handleLogout = () => {
     tokenStorage.clear();
@@ -66,11 +87,19 @@ export const Header = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      const typeParam = activeTab === 'all' ? '' : `&type=${activeTab}`;
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}${typeParam}`);
       setIsSearchOpen(false);
       setSearchQuery('');
     }
   };
+
+  const handleResultClick = () => {
+    setIsSearchOpen(false);
+    setSearchQuery('');
+  };
+
+  const hasResults = movieResults.length > 0 || peopleResults.length > 0 || userResults.length > 0;
 
   const navItems = [
     { label: 'Ana Sayfa', path: '/' },
@@ -122,7 +151,7 @@ export const Header = () => {
                 <form onSubmit={handleSearchSubmit}>
                   <input
                     type="text"
-                    placeholder="Film ara..."
+                    placeholder="Film, kişi veya kullanıcı ara..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={styles.searchInput}
@@ -130,36 +159,152 @@ export const Header = () => {
                   />
                 </form>
 
-                {searchResults.length > 0 && (
+                {/* Search Tabs */}
+                <div className={styles.searchTabs}>
+                  <button
+                    className={`${styles.searchTab} ${activeTab === 'all' ? styles.active : ''}`}
+                    onClick={() => setActiveTab('all')}
+                  >
+                    Tümü
+                  </button>
+                  <button
+                    className={`${styles.searchTab} ${activeTab === 'movies' ? styles.active : ''}`}
+                    onClick={() => setActiveTab('movies')}
+                  >
+                    Filmler
+                  </button>
+                  <button
+                    className={`${styles.searchTab} ${activeTab === 'people' ? styles.active : ''}`}
+                    onClick={() => setActiveTab('people')}
+                  >
+                    Kişiler
+                  </button>
+                  <button
+                    className={`${styles.searchTab} ${activeTab === 'users' ? styles.active : ''}`}
+                    onClick={() => setActiveTab('users')}
+                  >
+                    Kullanıcılar
+                  </button>
+                </div>
+
+                {/* Loading State */}
+                {isSearching && searchQuery.length >= 2 && (
+                  <div className={styles.searchLoading}>
+                    <div className={styles.loadingSpinner}></div>
+                    <span>Aranıyor...</span>
+                  </div>
+                )}
+
+                {/* Search Results */}
+                {!isSearching && hasResults && (
                   <div className={styles.searchResults}>
-                    {searchResults.map((movie) => (
+                    {/* Movies */}
+                    {movieResults.length > 0 && (activeTab === 'all' || activeTab === 'movies') && (
+                      <div className={styles.resultSection}>
+                        {activeTab === 'all' && <div className={styles.resultSectionTitle}>Filmler</div>}
+                        {movieResults.map((movie) => (
+                          <Link
+                            key={movie.id}
+                            to={`/movie/${movie.id}`}
+                            className={styles.searchResult}
+                            onClick={handleResultClick}
+                          >
+                            <div className={styles.searchResultPoster}>
+                              {movie.posterPath ? (
+                                <img src={getImageUrl(movie.posterPath, 'w92') || ''} alt={movie.title} />
+                              ) : (
+                                <div className={styles.noPoster}>🎬</div>
+                              )}
+                            </div>
+                            <div className={styles.searchResultInfo}>
+                              <span className={styles.searchResultTitle}>{movie.title}</span>
+                              <span className={styles.searchResultMeta}>{movie.year || 'N/A'}</span>
+                            </div>
+                            {movie.voteAverage && (
+                              <div className={styles.searchResultRating}>
+                                <span>★</span> {movie.voteAverage.toFixed(1)}
+                              </div>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* People */}
+                    {peopleResults.length > 0 && (activeTab === 'all' || activeTab === 'people') && (
+                      <div className={styles.resultSection}>
+                        {activeTab === 'all' && <div className={styles.resultSectionTitle}>Kişiler</div>}
+                        {peopleResults.map((person) => (
+                          <Link
+                            key={person.id}
+                            to={`/person/${person.id}`}
+                            className={styles.searchResult}
+                            onClick={handleResultClick}
+                          >
+                            <div className={styles.searchResultAvatar}>
+                              {person.profilePath ? (
+                                <img src={getProfileUrl(person.profilePath) || ''} alt={person.name} />
+                              ) : (
+                                <div className={styles.noAvatar}>👤</div>
+                              )}
+                            </div>
+                            <div className={styles.searchResultInfo}>
+                              <span className={styles.searchResultTitle}>{person.name}</span>
+                              <span className={styles.searchResultMeta}>
+                                {person.knownForDepartment || 'Oyuncu'}
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Users */}
+                    {userResults.length > 0 && (activeTab === 'all' || activeTab === 'users') && (
+                      <div className={styles.resultSection}>
+                        {activeTab === 'all' && <div className={styles.resultSectionTitle}>Kullanıcılar</div>}
+                        {userResults.map((u) => (
+                          <Link
+                            key={u.id}
+                            to={`/profile/${u.username}`}
+                            className={styles.searchResult}
+                            onClick={handleResultClick}
+                          >
+                            <div className={styles.searchResultAvatar}>
+                              <div className={styles.userInitial}>
+                                {u.username.charAt(0).toUpperCase()}
+                              </div>
+                            </div>
+                            <div className={styles.searchResultInfo}>
+                              <span className={styles.searchResultTitle}>@{u.username}</span>
+                              {u.bio && (
+                                <span className={styles.searchResultMeta}>
+                                  {u.bio.length > 40 ? u.bio.substring(0, 40) + '...' : u.bio}
+                                </span>
+                              )}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* View All Link */}
+                    {searchQuery.length >= 2 && (
                       <Link
-                        key={movie.id}
-                        to={`/movie/${movie.id}`}
-                        className={styles.searchResult}
-                        onClick={() => {
-                          setIsSearchOpen(false);
-                          setSearchQuery('');
-                        }}
+                        to={`/search?q=${encodeURIComponent(searchQuery)}${activeTab !== 'all' ? `&type=${activeTab}` : ''}`}
+                        className={styles.viewAllLink}
+                        onClick={handleResultClick}
                       >
-                        <div className={styles.searchResultPoster}>
-                          {movie.posterPath ? (
-                            <img src={getImageUrl(movie.posterPath, 'w185') || ''} alt={movie.title} />
-                          ) : (
-                            <div className={styles.noPoster}>🎬</div>
-                          )}
-                        </div>
-                        <div className={styles.searchResultInfo}>
-                          <span className={styles.searchResultTitle}>{movie.title}</span>
-                          <span className={styles.searchResultYear}>
-                            {movie.releaseDate?.split('T')[0]?.split('-')[0] || 'N/A'}
-                          </span>
-                        </div>
-                        <div className={styles.searchResultRating}>
-                          <span>★</span> {(movie.voteAverage ?? 0).toFixed(1)}
-                        </div>
+                        Tüm sonuçları gör →
                       </Link>
-                    ))}
+                    )}
+                  </div>
+                )}
+
+                {/* No Results */}
+                {!isSearching && searchQuery.length >= 2 && !hasResults && (
+                  <div className={styles.noResults}>
+                    <span>Sonuç bulunamadı</span>
                   </div>
                 )}
               </div>
