@@ -950,3 +950,25 @@ export const peopleApi = {
     return response.json();
   },
 };
+
+// ============= AI RECOMMENDATIONS API =============
+
+export const aiApi = {
+  async getMovieRecommendations(tmdbId: number, count: number = 10): Promise<Movie[]> {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/aimanager/movies/${tmdbId}/recommendations?count=${count}`,
+        { headers: getAuthHeaders() }
+      );
+
+      if (!response.ok) {
+        return [];
+      }
+
+      return response.json();
+    } catch {
+      // AI service might be unavailable, return empty array
+      return [];
+    }
+  },
+};

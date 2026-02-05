@@ -5,7 +5,9 @@ import {
   ratingsApi,
   listsApi,
   commentsApi,
+  aiApi,
   tokenStorage,
+  type Movie,
   type MovieDetail,
   type UserRating,
   type MovieRatingStats,
@@ -32,6 +34,10 @@ export const MovieDetailPage = () => {
   const [comments, setComments] = useState<PagedResult<CommentType> | null>(null);
   const [showListModal, setShowListModal] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
+
+  // Similar movies state
+  const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
+  const [similarLoading, setSimilarLoading] = useState(false);
 
   // New states for better UX
   const [ratingLoading, setRatingLoading] = useState(false);
@@ -67,6 +73,14 @@ export const MovieDetailPage = () => {
           ]);
           setMyRating(userRating);
           setUserLists(lists);
+        }
+
+        // Fetch similar movies (non-blocking, after main content)
+        if (movieData.tmdbId) {
+          setSimilarLoading(true);
+          const recommendations = await aiApi.getMovieRecommendations(movieData.tmdbId, 10);
+          setSimilarMovies(recommendations);
+          setSimilarLoading(false);
         }
       } catch (error) {
         console.error('Error fetching movie:', error);
@@ -466,6 +480,67 @@ export const MovieDetailPage = () => {
                 </Link>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* Similar Movies Section */}
+        {(similarMovies.length > 0 || similarLoading) && (
+          <section className={styles.similarSection}>
+            <div className={styles.sectionHeader}>
+              <h2>
+                <span className={styles.sectionIcon}>🎯</span>
+                Benzer Filmler
+              </h2>
+            </div>
+            {similarLoading ? (
+              <div className={styles.similarLoading}>
+                <div className={styles.loadingDots}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <p>AI önerileri yükleniyor...</p>
+              </div>
+            ) : (
+              <div className={styles.similarScroller}>
+                {similarMovies.map((similarMovie, index) => (
+                  <Link
+                    key={similarMovie.id}
+                    to={`/movie/${similarMovie.id}`}
+                    className={styles.similarCard}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <div className={styles.similarPosterWrapper}>
+                      {similarMovie.posterPath ? (
+                        <img
+                          src={getImageUrl(similarMovie.posterPath, 'w185') || ''}
+                          alt={similarMovie.title}
+                          className={styles.similarPoster}
+                        />
+                      ) : (
+                        <div className={styles.similarPlaceholder}>
+                          <span>🎬</span>
+                        </div>
+                      )}
+                      {similarMovie.voteAverage && (
+                        <div className={styles.similarRating}>
+                          <span>★</span> {similarMovie.voteAverage.toFixed(1)}
+                        </div>
+                      )}
+                      <div className={styles.similarOverlay}></div>
+                    </div>
+                    <div className={styles.similarInfo}>
+                      <span className={styles.similarTitle}>{similarMovie.title}</span>
+                      {similarMovie.releaseDate && (
+                        <span className={styles.similarYear}>
+                          {similarMovie.releaseDate.split('-')[0]}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </section>
         )}
 
