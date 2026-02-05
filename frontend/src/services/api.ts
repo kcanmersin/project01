@@ -20,6 +20,7 @@ export interface Movie {
 
 export interface Genre {
   id: number;
+  tmdbId?: number;
   name: string;
 }
 
@@ -948,6 +949,26 @@ export const peopleApi = {
     }
 
     return response.json();
+  },
+};
+
+// ============= GENRES API =============
+
+export const genresApi = {
+  async getGenres(): Promise<Genre[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/genres`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        return [];
+      }
+
+      return response.json();
+    } catch {
+      return [];
+    }
   },
 };
 
