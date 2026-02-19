@@ -10,6 +10,7 @@ import {
 import { router } from 'expo-router';
 import { useNewsStore } from '../../store/useNewsStore';
 import { useSavedStore } from '../../store/useSavedStore';
+import { useAuthStore } from '../../store/useAuthStore';
 import { NewsItem } from '../../constants/types';
 import SwipeDeck from '../../components/SwipeDeck';
 import { Colors, Spacing, Typography } from '../../constants/theme';
@@ -18,6 +19,12 @@ export default function HomeScreen() {
   const { init, getQueue, swipeLeft, swipeRight, isLoading, isOffline, fetchNews } =
     useNewsStore();
   const { save, hydrate } = useSavedStore();
+  const { user, logout } = useAuthStore();
+
+  const handleLogout = async () => {
+    await logout();
+    router.replace('/login');
+  };
 
   useEffect(() => {
     hydrate();
@@ -50,13 +57,27 @@ export default function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.logo}>SwipeNews</Text>
-        <TouchableOpacity
-          onPress={() => router.push('/(tabs)/filter')}
-          style={styles.filterBtn}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <Text style={styles.filterIcon}>⚙️</Text>
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          {user && (
+            <View style={[styles.roleBadge, { backgroundColor: roleColor(user.role) }]}>
+              <Text style={styles.roleText}>{user.role}</Text>
+            </View>
+          )}
+          <TouchableOpacity
+            onPress={() => router.push('/(tabs)/filter')}
+            style={styles.filterBtn}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Text style={styles.filterIcon}>⚙️</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleLogout}
+            style={styles.filterBtn}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Text style={styles.filterIcon}>🚪</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Offline banner */}
@@ -94,6 +115,12 @@ export default function HomeScreen() {
   );
 }
 
+function roleColor(role: string) {
+  if (role === 'superadmin') return '#9C27B0';
+  if (role === 'admin') return '#FF9800';
+  return '#4CAF50';
+}
+
 function EmptyState({ onRefresh }: { onRefresh: () => void }) {
   return (
     <View style={styles.emptyState}>
@@ -127,6 +154,21 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: Colors.primary,
     letterSpacing: -0.5,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+  },
+  roleBadge: {
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  roleText: {
+    fontSize: 11,
+    color: '#fff',
+    fontWeight: '700',
   },
   filterBtn: {
     padding: Spacing.xs,

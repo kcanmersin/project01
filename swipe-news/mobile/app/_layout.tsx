@@ -1,7 +1,9 @@
-import { Tabs } from 'expo-router';
+import { useEffect } from 'react';
+import { Tabs, router, Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet, Text } from 'react-native';
 import { Colors } from '../constants/theme';
+import { useAuthStore } from '../store/useAuthStore';
 
 function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
   return (
@@ -12,6 +14,34 @@ function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
 }
 
 export default function RootLayout() {
+  const { user, hydrate } = useAuthStore();
+
+  useEffect(() => {
+    hydrate().then(() => {
+      // After hydration, redirect based on auth state
+    });
+  }, []);
+
+  // Redirect to login if not authenticated (after hydration)
+  useEffect(() => {
+    const authStore = useAuthStore.getState();
+    if (!authStore.user) {
+      router.replace('/login');
+    }
+  }, [user]);
+
+  if (!user) {
+    // Show nothing while redirecting — login screen handles itself
+    return (
+      <GestureHandlerRootView style={styles.root}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="login" />
+          <Stack.Screen name="register" />
+        </Stack>
+      </GestureHandlerRootView>
+    );
+  }
+
   return (
     <GestureHandlerRootView style={styles.root}>
       <Tabs
@@ -44,6 +74,9 @@ export default function RootLayout() {
             tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" focused={focused} />,
           }}
         />
+        {/* Auth screens hidden from tab bar */}
+        <Tabs.Screen name="login" options={{ href: null }} />
+        <Tabs.Screen name="register" options={{ href: null }} />
       </Tabs>
     </GestureHandlerRootView>
   );
