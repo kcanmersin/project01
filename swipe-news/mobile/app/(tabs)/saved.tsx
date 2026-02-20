@@ -47,8 +47,15 @@ export default function SavedScreen() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Kaydedilenler</Text>
-          <Text style={styles.headerCount}>{items.length} haber</Text>
+          <View>
+            <Text style={styles.headerTitle}>Kaydedilenler</Text>
+            <Text style={styles.headerSub}>Sağa kaydırdığınız haberler</Text>
+          </View>
+          {items.length > 0 && (
+            <View style={styles.countBadge}>
+              <Text style={styles.countText}>{items.length}</Text>
+            </View>
+          )}
         </View>
 
         {items.length === 0 ? (
@@ -83,19 +90,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingVertical: 12,
     backgroundColor: Colors.card,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: '800',
     color: Colors.text,
   },
-  headerCount: {
-    ...Typography.meta,
+  headerSub: {
+    fontSize: 11,
     color: Colors.textMuted,
+    marginTop: 1,
+  },
+  countBadge: {
+    minWidth: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  countText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 13,
   },
   list: {
     paddingTop: Spacing.xs,

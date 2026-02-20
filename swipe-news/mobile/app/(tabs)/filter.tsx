@@ -38,7 +38,15 @@ export default function FilterScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Kategoriler</Text>
+        <View>
+          <Text style={styles.headerTitle}>Kategoriler</Text>
+          <Text style={styles.headerSub}>İlgilendiğiniz konuları seçin</Text>
+        </View>
+        {selected.length > 0 && (
+          <View style={styles.selectedBadge}>
+            <Text style={styles.selectedText}>{selected.length} seçili</Text>
+          </View>
+        )}
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
@@ -89,16 +97,37 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingVertical: 12,
     backgroundColor: Colors.card,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: '800',
     color: Colors.text,
+  },
+  headerSub: {
+    fontSize: 11,
+    color: Colors.textMuted,
+    marginTop: 1,
+  },
+  selectedBadge: {
+    borderRadius: 14,
+    backgroundColor: Colors.primary + '18',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderWidth: 1,
+    borderColor: Colors.primary + '40',
+  },
+  selectedText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: Colors.primary,
   },
   content: {
     padding: Spacing.md,

@@ -56,26 +56,28 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.safe}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.logo}>SwipeNews</Text>
+        <View>
+          <Text style={styles.logo}>SwipeNews</Text>
+          <Text style={styles.logoSub}>Güncel haberler</Text>
+        </View>
         <View style={styles.headerRight}>
           {user && (
-            <View style={[styles.roleBadge, { backgroundColor: roleColor(user.role) }]}>
-              <Text style={styles.roleText}>{user.role}</Text>
+            <View style={styles.userInfo}>
+              <View style={[styles.avatar, { backgroundColor: roleColor(user.role) }]}>
+                <Text style={styles.avatarText}>{user.username[0].toUpperCase()}</Text>
+              </View>
+              <View>
+                <Text style={styles.avatarName}>{user.username}</Text>
+                <Text style={[styles.avatarRole, { color: roleColor(user.role) }]}>{user.role}</Text>
+              </View>
             </View>
           )}
           <TouchableOpacity
-            onPress={() => router.push('/(tabs)/filter')}
-            style={styles.filterBtn}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          >
-            <Text style={styles.filterIcon}>⚙️</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={handleLogout}
-            style={styles.filterBtn}
+            style={styles.logoutBtn}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Text style={styles.filterIcon}>🚪</Text>
+            <Text style={styles.logoutIcon}>↩</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -144,37 +146,68 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingVertical: 12,
     backgroundColor: Colors.card,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
   logo: {
-    fontSize: 22,
-    fontWeight: '800',
+    fontSize: 20,
+    fontWeight: '900',
     color: Colors.primary,
     letterSpacing: -0.5,
+  },
+  logoSub: {
+    fontSize: 11,
+    color: Colors.textMuted,
+    marginTop: 1,
   },
   headerRight: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: Spacing.xs,
   },
-  roleBadge: {
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+  avatar: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  roleText: {
-    fontSize: 11,
+  avatarText: {
     color: '#fff',
     fontWeight: '700',
+    fontSize: 14,
   },
-  filterBtn: {
-    padding: Spacing.xs,
+  avatarName: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: Colors.text,
   },
-  filterIcon: {
-    fontSize: 22,
+  avatarRole: {
+    fontSize: 10,
+    fontWeight: '700',
+    textTransform: 'uppercase' as const,
+    letterSpacing: 0.3,
+  },
+  logoutBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: Colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  logoutIcon: {
+    fontSize: 16,
+    color: Colors.textSecondary,
   },
   offlineBanner: {
     backgroundColor: '#FFA726',
