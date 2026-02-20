@@ -6,5 +6,6 @@ export interface NewsItem {
   image_url: string | null;
   source: string;
   category: string;
+  country: string;
   published_at: string;
 }
