@@ -76,6 +76,7 @@ def _parse_feed(raw_content: str, source_meta: dict) -> list[dict]:
                 "image_url": _extract_image(entry),
                 "source": source_meta["source"],
                 "category": source_meta["category"],
+                "country": source_meta["country"],
                 "published_at": _parse_date(entry),
             }
         )
@@ -98,17 +99,17 @@ async def _fetch_one(client: httpx.AsyncClient, source: dict) -> list[dict]:
         return []
 
 
-async def get_news(categories: list[str]) -> list[dict]:
-    cache_key = "feed:" + ",".join(sorted(categories))
+async def get_news(categories: list[str], countries: list[str]) -> list[dict]:
+    cache_key = "feed:" + ",".join(sorted(categories)) + "|" + ",".join(sorted(countries))
     cached = cache.get(cache_key)
     if cached is not None:
         return cached
 
-    sources = (
-        RSS_SOURCES
-        if not categories
-        else [s for s in RSS_SOURCES if s["category"] in categories]
-    )
+    sources = RSS_SOURCES
+    if categories:
+        sources = [s for s in sources if s["category"] in categories]
+    if countries:
+        sources = [s for s in sources if s["country"] in countries]
 
     async with httpx.AsyncClient() as client:
         results = await asyncio.gather(*[_fetch_one(client, s) for s in sources])

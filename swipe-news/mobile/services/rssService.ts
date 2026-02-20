@@ -10,17 +10,21 @@ interface CacheEntry {
   data: NewsItem[];
   timestamp: number;
   categories: string[];
+  countries: string[];
 }
 
-async function readCache(categories: string[]): Promise<NewsItem[] | null> {
+async function readCache(categories: string[], countries: string[]): Promise<NewsItem[] | null> {
   try {
     const raw = await AsyncStorage.getItem(CACHE_KEY);
     if (!raw) return null;
     const entry: CacheEntry = JSON.parse(raw);
     const sameCategories =
-      JSON.stringify([...entry.categories].sort()) ===
+      JSON.stringify([...(entry.categories ?? [])].sort()) ===
       JSON.stringify([...categories].sort());
-    if (!sameCategories) return null;
+    const sameCountries =
+      JSON.stringify([...(entry.countries ?? [])].sort()) ===
+      JSON.stringify([...countries].sort());
+    if (!sameCategories || !sameCountries) return null;
     if (Date.now() - entry.timestamp > CACHE_TTL_MS) return null;
     return entry.data;
   } catch {
@@ -28,25 +32,27 @@ async function readCache(categories: string[]): Promise<NewsItem[] | null> {
   }
 }
 
-async function writeCache(data: NewsItem[], categories: string[]): Promise<void> {
+async function writeCache(data: NewsItem[], categories: string[], countries: string[]): Promise<void> {
   try {
-    const entry: CacheEntry = { data, timestamp: Date.now(), categories };
+    const entry: CacheEntry = { data, timestamp: Date.now(), categories, countries };
     await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(entry));
   } catch {
     // ignore storage errors
   }
 }
 
-export async function fetchNews(categories: string[]): Promise<NewsItem[]> {
+export async function fetchNews(categories: string[], countries: string[]): Promise<NewsItem[]> {
   try {
-    const params = categories.length ? { categories: categories.join(',') } : {};
+    const params: Record<string, string> = {};
+    if (categories.length) params.categories = categories.join(',');
+    if (countries.length)  params.countries  = countries.join(',');
     const res = await axios.get<{ items: NewsItem[] }>(`${API_URL}/feed`, { params, timeout: 15000 });
     const items = res.data.items;
-    await writeCache(items, categories);
+    await writeCache(items, categories, countries);
     return items;
   } catch {
     // Network hatası: cache'e düş
-    const cached = await readCache(categories);
+    const cached = await readCache(categories, countries);
     if (cached) return cached;
     // En son herhangi bir cache
     try {

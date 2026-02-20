@@ -41,3 +41,20 @@ export async function getSelectedCategories(): Promise<string[]> {
 export async function saveSelectedCategories(categories: string[]): Promise<void> {
   await AsyncStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
 }
+
+// ── Country preferences ───────────────────────────────────────────────────────
+
+const COUNTRIES_KEY = 'selected_countries';
+
+export async function getSelectedCountries(): Promise<string[]> {
+  try {
+    const raw = await AsyncStorage.getItem(COUNTRIES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function saveSelectedCountries(countries: string[]): Promise<void> {
+  await AsyncStorage.setItem(COUNTRIES_KEY, JSON.stringify(countries));
+}
