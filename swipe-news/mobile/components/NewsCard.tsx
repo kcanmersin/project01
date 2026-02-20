@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   Animated,
+  Pressable,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,6 +13,8 @@ import { NewsItem } from '../constants/types';
 import { getCategoryById } from '../constants/categories';
 import { Colors, Typography, Spacing, Radius, Shadow } from '../constants/theme';
 import { fetchOgImage } from '../services/ogImageService';
+import { COUNTRY_LANG_MAP } from '../services/translateService';
+import TranslateModal from './TranslateModal';
 import { formatDistanceToNow } from 'date-fns';
 import { tr } from 'date-fns/locale';
 
@@ -27,7 +30,10 @@ interface Props {
 
 export default function NewsCard({ item, swipeDirectionX, isTop = false }: Props) {
   const [resolvedImage, setResolvedImage] = useState<string | null>(item.image_url);
+  const [translateVisible, setTranslateVisible] = useState(false);
+  const [translateText, setTranslateText] = useState('');
   const category = getCategoryById(item.category);
+  const sourceLang = COUNTRY_LANG_MAP[item.country?.toUpperCase()] ?? 'en';
 
   useEffect(() => {
     if (!item.image_url && isTop) {
@@ -97,13 +103,27 @@ export default function NewsCard({ item, swipeDirectionX, isTop = false }: Props
 
       {/* İçerik alanı */}
       <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={3}>
-          {item.title}
-        </Text>
-        {item.summary ? (
-          <Text style={styles.summary} numberOfLines={2}>
-            {item.summary}
+        <Pressable
+          onLongPress={() => {
+            setTranslateText(item.title);
+            setTranslateVisible(true);
+          }}
+        >
+          <Text style={styles.title} numberOfLines={3}>
+            {item.title}
           </Text>
+        </Pressable>
+        {item.summary ? (
+          <Pressable
+            onLongPress={() => {
+              setTranslateText(item.summary);
+              setTranslateVisible(true);
+            }}
+          >
+            <Text style={styles.summary} numberOfLines={2}>
+              {item.summary}
+            </Text>
+          </Pressable>
         ) : null}
 
         <View style={styles.meta}>
@@ -115,6 +135,12 @@ export default function NewsCard({ item, swipeDirectionX, isTop = false }: Props
           </Text>
         </View>
       </View>
+      <TranslateModal
+        visible={translateVisible}
+        text={translateText}
+        sourceLang={sourceLang}
+        onClose={() => setTranslateVisible(false)}
+      />
     </View>
   );
 }
