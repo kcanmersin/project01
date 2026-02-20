@@ -27,3 +27,7 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserResponse
+
+
+class GoogleAuthRequest(BaseModel):
+    id_token: str

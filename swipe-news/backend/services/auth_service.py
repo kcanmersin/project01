@@ -1,4 +1,6 @@
 import os
+import re
+import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
@@ -61,6 +63,59 @@ def create_user(db: Session, username: str, password: str, email: Optional[str] 
         email=email,
         hashed_password=hash_password(password),
         role=role,
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+# ── Google OAuth helpers ───────────────────────────────────────────────────────
+
+def get_user_by_google_id(db: Session, google_id: str) -> Optional[User]:
+    return db.query(User).filter(User.google_id == google_id).first()
+
+
+def _safe_username(base: str) -> str:
+    """Ad / email'den geçerli bir username türetir."""
+    cleaned = re.sub(r"[^a-zA-Z0-9_]", "", base)[:20]
+    return cleaned if len(cleaned) >= 3 else "user"
+
+
+def get_or_create_google_user(
+    db: Session,
+    google_id: str,
+    email: Optional[str],
+    name: Optional[str],
+) -> User:
+    # 1. google_id ile mevcut kullanıcıyı ara
+    user = get_user_by_google_id(db, google_id)
+    if user:
+        return user
+
+    # 2. Aynı e-posta ile kayıtlıysa google_id'yi bağla
+    if email:
+        user = get_user_by_email(db, email)
+        if user:
+            user.google_id = google_id
+            db.commit()
+            db.refresh(user)
+            return user
+
+    # 3. Yeni kullanıcı oluştur
+    base = _safe_username(name or (email.split("@")[0] if email else "user"))
+    username = base
+    counter = 1
+    while get_user_by_username(db, username):
+        username = f"{base}{counter}"
+        counter += 1
+
+    user = User(
+        username=username,
+        email=email,
+        google_id=google_id,
+        hashed_password=hash_password(secrets.token_hex(32)),  # Google kullanıcısı şifreyle giriş yapamaz
+        role="user",
     )
     db.add(user)
     db.commit()

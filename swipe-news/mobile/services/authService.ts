@@ -56,6 +56,12 @@ export async function loadStoredAuth(): Promise<{ token: string; user: AuthUser 
   }
 }
 
+export async function loginWithGoogle(idToken: string): Promise<AuthResponse> {
+  const res = await axios.post<AuthResponse>(`${API_URL}/auth/google`, { id_token: idToken });
+  await persistAuth(res.data);
+  return res.data;
+}
+
 export async function logout(): Promise<void> {
   await AsyncStorage.multiRemove([TOKEN_KEY, USER_KEY]);
 }

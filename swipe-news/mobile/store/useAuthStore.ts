@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import {
   AuthUser,
   login as apiLogin,
+  loginWithGoogle as apiLoginWithGoogle,
   register as apiRegister,
   logout as apiLogout,
   loadStoredAuth,
@@ -15,6 +16,7 @@ interface AuthState {
 
   hydrate: () => Promise<void>;
   login: (username: string, password: string) => Promise<void>;
+  loginWithGoogle: (idToken: string) => Promise<void>;
   register: (username: string, password: string, email?: string) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
@@ -41,6 +43,19 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (err: any) {
       const msg =
         err?.response?.data?.detail ?? 'Giriş başarısız, tekrar deneyin';
+      set({ isLoading: false, error: msg });
+      throw err;
+    }
+  },
+
+  loginWithGoogle: async (idToken) => {
+    set({ isLoading: true, error: null });
+    try {
+      const data = await apiLoginWithGoogle(idToken);
+      set({ user: data.user, token: data.access_token, isLoading: false });
+    } catch (err: any) {
+      const msg =
+        err?.response?.data?.detail ?? 'Google girişi başarısız, tekrar deneyin';
       set({ isLoading: false, error: msg });
       throw err;
     }

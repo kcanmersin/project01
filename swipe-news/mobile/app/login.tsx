@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,8 +12,12 @@ import {
   StatusBar,
 } from 'react-native';
 import { router } from 'expo-router';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 import { useAuthStore } from '../store/useAuthStore';
 import { Colors, Spacing, Radius } from '../constants/theme';
+
+WebBrowser.maybeCompleteAuthSession();
 
 const ROLE_COLORS: Record<string, string> = {
   superadmin: '#7C3AED',
@@ -31,7 +35,31 @@ export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [focusedField, setFocusedField] = useState<'username' | 'password' | null>(null);
-  const { login, isLoading, error, clearError } = useAuthStore();
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const { login, loginWithGoogle, isLoading, error, clearError } = useAuthStore();
+
+  // Google OAuth
+  const [, response, promptAsync] = Google.useAuthRequest({
+    webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
+    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
+  });
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const idToken = response.params?.id_token;
+      if (idToken) {
+        setGoogleLoading(true);
+        loginWithGoogle(idToken)
+          .then(() => router.replace('/(tabs)/'))
+          .catch(() => setGoogleLoading(false));
+      } else {
+        setGoogleLoading(false);
+      }
+    } else if (response?.type === 'error' || response?.type === 'dismiss') {
+      setGoogleLoading(false);
+    }
+  }, [response]);
 
   const handleLogin = async () => {
     if (!username.trim() || !password.trim()) return;
@@ -123,6 +151,30 @@ export default function LoginScreen() {
               <ActivityIndicator color="#fff" size="small" />
             ) : (
               <Text style={styles.btnText}>Giriş Yap →</Text>
+            )}
+          </TouchableOpacity>
+
+          {/* Ayraç */}
+          <View style={styles.dividerRow}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>veya</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          {/* Google ile Giriş */}
+          <TouchableOpacity
+            style={styles.googleBtn}
+            onPress={() => { setGoogleLoading(true); promptAsync(); }}
+            disabled={googleLoading || isLoading}
+            activeOpacity={0.85}
+          >
+            {googleLoading ? (
+              <ActivityIndicator color={Colors.text} size="small" />
+            ) : (
+              <>
+                <Text style={styles.googleIcon}>G</Text>
+                <Text style={styles.googleBtnText}>Google ile Giriş Yap</Text>
+              </>
             )}
           </TouchableOpacity>
 
@@ -315,6 +367,50 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.3,
+  },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: Spacing.md,
+    gap: Spacing.sm,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: Colors.border,
+  },
+  dividerText: {
+    fontSize: 12,
+    color: Colors.textMuted,
+    fontWeight: '600',
+  },
+  googleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.sm,
+    borderWidth: 1.5,
+    borderColor: Colors.border,
+    borderRadius: Radius.small,
+    paddingVertical: 13,
+    minHeight: 52,
+    backgroundColor: Colors.card,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  googleIcon: {
+    fontSize: 18,
+    fontWeight: '900',
+    color: '#4285F4',
+    letterSpacing: -0.5,
+  },
+  googleBtnText: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: Colors.text,
   },
   linkBtn: {
     alignItems: 'center',
