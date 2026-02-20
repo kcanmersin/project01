@@ -47,9 +47,12 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (response?.type === 'success') {
-      const idToken = response.params?.id_token;
+      // Expo Go  → response.params.id_token
+      // Native   → response.authentication?.idToken
+      const idToken =
+        response.params?.id_token ??
+        (response as any).authentication?.idToken;
       if (idToken) {
-        setGoogleLoading(true);
         loginWithGoogle(idToken)
           .then(() => router.replace('/(tabs)/'))
           .catch(() => setGoogleLoading(false));
@@ -59,7 +62,7 @@ export default function LoginScreen() {
     } else if (response?.type === 'error' || response?.type === 'dismiss') {
       setGoogleLoading(false);
     }
-  }, [response]);
+  }, [response, loginWithGoogle]);
 
   const handleLogin = async () => {
     if (!username.trim() || !password.trim()) return;
@@ -164,7 +167,11 @@ export default function LoginScreen() {
           {/* Google ile Giriş */}
           <TouchableOpacity
             style={styles.googleBtn}
-            onPress={() => { setGoogleLoading(true); promptAsync(); }}
+            onPress={() => {
+              clearError();
+              setGoogleLoading(true);
+              promptAsync().catch(() => setGoogleLoading(false));
+            }}
             disabled={googleLoading || isLoading}
             activeOpacity={0.85}
           >

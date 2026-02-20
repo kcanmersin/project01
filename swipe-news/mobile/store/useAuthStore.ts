@@ -49,14 +49,14 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   loginWithGoogle: async (idToken) => {
-    set({ isLoading: true, error: null });
+    set({ error: null }); // isLoading'e dokunmuyoruz, bileşen kendi googleLoading state'ini yönetiyor
     try {
       const data = await apiLoginWithGoogle(idToken);
-      set({ user: data.user, token: data.access_token, isLoading: false });
+      set({ user: data.user, token: data.access_token });
     } catch (err: any) {
       const msg =
         err?.response?.data?.detail ?? 'Google girişi başarısız, tekrar deneyin';
-      set({ isLoading: false, error: msg });
+      set({ error: msg });
       throw err;
     }
   },
