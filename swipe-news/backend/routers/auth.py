@@ -69,19 +69,3 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)):
     user = create_user(db, body.username, body.password, body.email, role="user")
     token = create_access_token(user.id, user.username, user.role)
     return TokenResponse(access_token=token, user=UserResponse.model_validate(user))
-
-
-@router.get("/me", response_model=UserResponse)
-def me(db: Session = Depends(get_db), token: str = ""):
-    """Token ile mevcut kullanıcıyı döndür — Authorization header'dan kullanılır."""
-    from fastapi import Header
-    from services.auth_service import decode_token
-
-    payload = decode_token(token)
-    if not payload:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Geçersiz token")
-
-    user = db.query(__import__("models.user", fromlist=["User"]).User).filter_by(id=int(payload["sub"])).first()
-    if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Kullanıcı bulunamadı")
-    return UserResponse.model_validate(user)

@@ -1,97 +1,50 @@
-import { useEffect } from 'react';
-import { Tabs, router, Stack } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Stack, useRouter, useSegments } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StyleSheet, Text } from 'react-native';
-import { Colors } from '../constants/theme';
+import { ActivityIndicator, View } from 'react-native';
 import { useAuthStore } from '../store/useAuthStore';
+import { Colors } from '../constants/theme';
 
-function TabIcon({ emoji, focused }: { emoji: string; focused: boolean }) {
-  return (
-    <Text style={{ fontSize: focused ? 24 : 20, opacity: focused ? 1 : 0.6 }}>
-      {emoji}
-    </Text>
-  );
+function AuthGuard({ hydrated }: { hydrated: boolean }) {
+  const { user } = useAuthStore();
+  const router = useRouter();
+  const segments = useSegments();
+
+  useEffect(() => {
+    if (!hydrated) return;
+
+    const inTabs = segments[0] === '(tabs)';
+
+    if (!user && inTabs) {
+      router.replace('/login');
+    } else if (user && !inTabs) {
+      router.replace('/(tabs)/');
+    }
+  }, [user, segments, hydrated]);
+
+  return null;
 }
 
 export default function RootLayout() {
-  const { user, hydrate } = useAuthStore();
+  const { hydrate } = useAuthStore();
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    hydrate().then(() => {
-      // After hydration, redirect based on auth state
-    });
+    hydrate().finally(() => setHydrated(true));
   }, []);
 
-  // Redirect to login if not authenticated (after hydration)
-  useEffect(() => {
-    const authStore = useAuthStore.getState();
-    if (!authStore.user) {
-      router.replace('/login');
-    }
-  }, [user]);
-
-  if (!user) {
-    // Show nothing while redirecting — login screen handles itself
+  if (!hydrated) {
     return (
-      <GestureHandlerRootView style={styles.root}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="login" />
-          <Stack.Screen name="register" />
-        </Stack>
+      <GestureHandlerRootView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color={Colors.primary} />
       </GestureHandlerRootView>
     );
   }
 
   return (
-    <GestureHandlerRootView style={styles.root}>
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: styles.tabBar,
-          tabBarActiveTintColor: Colors.tabBarActive,
-          tabBarInactiveTintColor: Colors.tabBarInactive,
-          tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
-        }}
-      >
-        <Tabs.Screen
-          name="(tabs)/index"
-          options={{
-            title: 'Haberler',
-            tabBarIcon: ({ focused }) => <TabIcon emoji="🔥" focused={focused} />,
-          }}
-        />
-        <Tabs.Screen
-          name="(tabs)/saved"
-          options={{
-            title: 'Kaydedilenler',
-            tabBarIcon: ({ focused }) => <TabIcon emoji="🔖" focused={focused} />,
-          }}
-        />
-        <Tabs.Screen
-          name="(tabs)/filter"
-          options={{
-            title: 'Filtrele',
-            tabBarIcon: ({ focused }) => <TabIcon emoji="⚙️" focused={focused} />,
-          }}
-        />
-        {/* Auth screens hidden from tab bar */}
-        <Tabs.Screen name="login" options={{ href: null }} />
-        <Tabs.Screen name="register" options={{ href: null }} />
-      </Tabs>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthGuard hydrated={hydrated} />
+      <Stack screenOptions={{ headerShown: false }} />
     </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  tabBar: {
-    height: 64,
-    paddingBottom: 8,
-    paddingTop: 4,
-    backgroundColor: Colors.tabBar,
-    borderTopWidth: 1,
-    borderTopColor: '#EEEEEE',
-  },
-});
